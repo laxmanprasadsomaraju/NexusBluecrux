@@ -16,6 +16,16 @@ export function setAuthToken(token: string | null) {
   authToken = token;
 }
 
+// Registered by AuthProvider so a 401 from any request (e.g. a stale/expired token,
+// or a token whose user no longer exists after a demo-data reseed) immediately logs
+// the user out and sends them back to /login instead of leaving the app silently
+// showing empty dashes and failed requests forever.
+let onUnauthorized: (() => void) | null = null;
+
+export function setUnauthorizedHandler(fn: (() => void) | null) {
+  onUnauthorized = fn;
+}
+
 interface RequestOptions {
   method?: string;
   body?: unknown;
@@ -45,6 +55,7 @@ export async function apiFetch<T>(path: string, opts: RequestOptions = {}): Prom
       (detail && typeof detail === 'object' && 'detail' in detail
         ? String((detail as { detail: unknown }).detail)
         : null) || `Request failed (${res.status})`;
+    if (res.status === 401) onUnauthorized?.();
     throw new ApiError(res.status, detail, message);
   }
 
