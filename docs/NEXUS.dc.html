@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; }
+    body { font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    * { box-sizing: border-box; }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb { background: #CED4DA; border-radius: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+  </style>
+</helmet>
+
+<div style="display:flex; height:100vh; overflow:hidden; background:#F8F9FA; font-size:13px; color:#495057;">
+
+  <!-- ============ SIDEBAR ============ -->
+  <div style="width:220px; min-width:220px; background:#0D1B2A; display:flex; flex-direction:column; height:100%;">
+    <div style="padding:18px 16px 14px 16px; border-bottom:1px solid rgba(255,255,255,0.1);">
+      <div style="color:#FFFFFF; font-size:16px; font-weight:500; letter-spacing:0.5px;">NEXUS</div>
+      <div style="color:#00B4D8; font-size:12px; margin-top:2px;">by Bluecrux</div>
+    </div>
+    <div style="flex:1; overflow-y:auto; padding-top:14px;">
+      <div style="font-size:10px; font-weight:500; text-transform:uppercase; color:rgba(0,180,216,0.5); letter-spacing:1px; padding:0 16px; margin-bottom:6px;">Operations</div>
+
+      <div onClick="{{ goQueue }}" style="{{ navQueueStyle }}" style-hover="{{ navHover }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <span style="flex:1;">Exception queue</span>
+        <span style="{{ criticalBadgeStyle }}">{{ criticalCount }}</span>
+      </div>
+
+      <div onClick="{{ goActions }}" style="{{ navActionsStyle }}" style-hover="{{ navHover }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11"></path><path d="M10 12h11"></path><path d="M10 18h11"></path><path d="m3 6 1 1 2-2"></path><path d="m3 12 1 1 2-2"></path><path d="m3 18 1 1 2-2"></path></svg>
+        <span style="flex:1;">My actions</span>
+        <span style="{{ pendingBadgeStyle }}">{{ pendingCount }}</span>
+      </div>
+
+      <div onClick="{{ goExec }}" style="{{ navExecStyle }}" style-hover="{{ navHover }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+        <span style="flex:1;">Executive view</span>
+      </div>
+
+      <div style="font-size:10px; font-weight:500; text-transform:uppercase; color:rgba(0,180,216,0.5); letter-spacing:1px; padding:0 16px; margin:16px 0 6px 0;">Network</div>
+
+      <div onClick="{{ goPartners }}" style="{{ navPartnersStyle }}" style-hover="{{ navHover }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M17 18h1"></path><path d="M12 18h1"></path><path d="M7 18h1"></path></svg>
+        <span style="flex:1;">Partner network</span>
+      </div>
+
+      <a href="PartnerPortal.dc.html" style="height:40px; padding:0 16px; display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.7); font-size:13px; cursor:pointer; border-left:2px solid transparent; text-decoration:none;" style-hover="{{ navHover }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        <span style="flex:1;">Partner portal</span>
+        <span style="font-size:9px; font-weight:500; color:rgba(255,255,255,0.4); border:0.5px solid rgba(255,255,255,0.25); border-radius:4px; padding:1px 5px;">External</span>
+      </a>
+
+      <div onClick="{{ goIntegrations }}" style="{{ navIntegrationsStyle }}" style-hover="{{ navHover }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6"></path><path d="M15 2v6"></path><path d="M12 17v5"></path><path d="M5 8h14v4a7 7 0 0 1-14 0Z"></path></svg>
+        <span style="flex:1;">Integrations</span>
+      </div>
+
+      <div style="font-size:10px; font-weight:500; text-transform:uppercase; color:rgba(0,180,216,0.5); letter-spacing:1px; padding:0 16px; margin:16px 0 6px 0;">Settings</div>
+
+      <div onClick="{{ goRules }}" style="{{ navRulesStyle }}" style-hover="{{ navHover }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        <span style="flex:1;">Alert rules</span>
+      </div>
+
+      <div onClick="{{ goTeams }}" style="{{ navTeamsStyle }}" style-hover="{{ navHover }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span style="flex:1;">Teams</span>
+      </div>
+
+      <div onClick="{{ goAudit }}" style="{{ navAuditStyle }}" style-hover="{{ navHover }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        <span style="flex:1;">Audit log</span>
+      </div>
+
+      <sc-if value="{{ isAdminUser }}" hint-placeholder-val="{{ true }}">
+        <div style="font-size:10px; font-weight:500; text-transform:uppercase; color:rgba(0,180,216,0.5); letter-spacing:1px; padding:0 16px; margin:16px 0 6px 0;">Administration</div>
+
+        <div onClick="{{ goUsers }}" style="{{ navUsersStyle }}" style-hover="{{ navHover }}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line></svg>
+          <span style="flex:1;">Users &amp; permissions</span>
+        </div>
+
+        <div onClick="{{ goSettings }}" style="{{ navSettingsStyle }}" style-hover="{{ navHover }}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+          <span style="flex:1;">Workspace settings</span>
+        </div>
+      </sc-if>
+    </div>
+    <div style="position:relative;">
+      <sc-if value="{{ roleMenuOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute; bottom:100%; left:8px; right:8px; background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.2); overflow:hidden; margin-bottom:6px; z-index:50;">
+          <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; padding:8px 12px 4px 12px;">Switch user (demo)</div>
+          <sc-for list="{{ personaRows }}" as="pr" hint-placeholder-count="5">
+            <div onClick="{{ pr.pick }}" style="{{ pr.style }}" style-hover="{{ matchHover }}">
+              <div style="font-size:12px; color:#212529; font-weight:500;">{{ pr.name }}</div>
+              <div style="font-size:11px; color:#6C757D;">{{ pr.role }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <div onClick="{{ toggleRoleMenu }}" style="border-top:1px solid rgba(255,255,255,0.1); padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-hover="{{ userBlockHover }}">
+        <div style="width:32px; height:32px; border-radius:50%; background:#00B4D8; color:#0D1B2A; font-size:12px; font-weight:500; display:flex; align-items:center; justify-content:center;">{{ userInitials }}</div>
+        <div style="flex:1; min-width:0;">
+          <div style="font-size:12px; color:#FFFFFF;">{{ userName }}</div>
+          <div style="font-size:11px; color:rgba(255,255,255,0.4);">{{ userRole }}</div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MAIN ============ -->
+  <div style="flex:1; display:flex; flex-direction:column; height:100%; min-width:0;">
+
+    <!-- Top bar -->
+    <div style="background:#FFFFFF; height:56px; min-height:56px; border-bottom:0.5px solid #CED4DA; display:flex; align-items:center; padding:0 20px; gap:8px;">
+      <div style="flex:1; min-width:0;">
+        <div style="font-size:15px; font-weight:500; color:#212529;">{{ screenTitle }}</div>
+        <div style="font-size:12px; color:#6C757D;">{{ screenSub }}</div>
+      </div>
+      <button onClick="{{ toggleChat }}" style="display:flex; align-items:center; gap:6px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#7B2FBE; background:#F3E8FF; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-active="{{ btnActive }}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <span>Ask AI</span>
+      </button>
+      <button onClick="{{ toggleNotif }}" style="position:relative; display:flex; align-items:center; font-family:Inter,system-ui,sans-serif; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 9px; cursor:pointer;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+        <sc-if value="{{ hasUnread }}" hint-placeholder-val="{{ false }}">
+          <span style="position:absolute; top:5px; right:6px; min-width:14px; height:14px; border-radius:10px; background:#E63946; color:#FFFFFF; font-size:9px; font-weight:500; display:flex; align-items:center; justify-content:center; padding:0 3px;">{{ unreadCount }}</span>
+        </sc-if>
+      </button>
+      <sc-if value="{{ isExec }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ exportPdf }}" style="display:flex; align-items:center; gap:6px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="{{ pdfIconStyle }}"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>{{ pdfLabel }}</span>
+        </button>
+      </sc-if>
+      <button onClick="{{ doSync }}" style="display:flex; align-items:center; gap:6px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="{{ syncIconStyle }}"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M3 21v-5h5"></path></svg>
+        <span>Sync</span>
+      </button>
+      <button onClick="{{ openModal }}" style="display:flex; align-items:center; gap:6px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:0.5px solid #00B4D8; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>Raise exception</span>
+      </button>
+    </div>
+
+    <!-- ============ SCREEN 1: EXCEPTION QUEUE ============ -->
+    <sc-if value="{{ isQueue }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="Exception queue" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+
+        <!-- Zone 1: stat strip -->
+        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; padding:14px 20px 0 20px;">
+          <sc-for list="{{ statCards }}" as="card" hint-placeholder-count="4">
+            <div onClick="{{ card.onClick }}" style="{{ card.style }}" style-hover="{{ card.hoverStyle }}">
+              <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D;">{{ card.label }}</div>
+              <div style="{{ card.valueStyle }}">{{ card.value }}</div>
+              <div style="{{ card.deltaStyle }}">{{ card.delta }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- Zone 2: filter bar -->
+        <div style="height:44px; min-height:44px; display:flex; align-items:center; gap:8px; padding:0 20px;">
+          <sc-for list="{{ filterPills }}" as="pill" hint-placeholder-count="4">
+            <button onClick="{{ pill.onClick }}" style="{{ pill.style }}" style-active="{{ btnActive }}">{{ pill.label }}</button>
+          </sc-for>
+          <sc-if value="{{ hasPartnerFilter }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ clearPartnerFilter }}" style="font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; padding:4px 12px; border-radius:20px; border:0.5px solid #00B4D8; background:rgba(0,180,216,0.07); color:#0099BB; cursor:pointer;">← All partners</button>
+            <span style="font-size:11px; color:#6C757D;">Showing: {{ partnerFilterName }}</span>
+          </sc-if>
+          <sc-if value="{{ hasStatusFilter }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ clearStatusFilter }}" style="font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; padding:4px 12px; border-radius:20px; border:0.5px solid #CED4DA; background:#F1F3F5; color:#495057; cursor:pointer;">Filter: {{ statusFilterLabel }} ✕</button>
+          </sc-if>
+          <input value="{{ search }}" onChange="{{ onSearch }}" placeholder="Search exceptions…" style="margin-left:auto; width:200px; border:0.5px solid #CED4DA; border-radius:8px; padding:5px 10px; font-size:12px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+          <button onClick="{{ exportCsv }}" style="display:flex; align-items:center; gap:5px; font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:5px 10px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Export CSV</span>
+          </button>
+        </div>
+
+        <!-- Zones 3 + 4 -->
+        <div style="flex:1; display:flex; min-height:0; border-top:0.5px solid #CED4DA; background:#FFFFFF;">
+
+          <!-- Zone 3: exception list -->
+          <div style="width:340px; min-width:340px; overflow-y:auto; border-right:0.5px solid #CED4DA;">
+            <sc-for list="{{ exceptionCards }}" as="ex" hint-placeholder-count="5">
+              <div onClick="{{ ex.select }}" style="{{ ex.cardStyle }}" style-hover="{{ ex.hoverStyle }}">
+                <div style="display:flex; gap:8px;">
+                  <div style="{{ ex.dotStyle }}"></div>
+                  <div style="flex:1; font-size:13px; font-weight:500; color:#212529; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{{ ex.title }}</div>
+                  <sc-if value="{{ ex.isNew }}" hint-placeholder-val="{{ false }}">
+                    <span style="font-size:10px; font-weight:500; color:#0099BB; background:#CAF0F8; border-radius:4px; padding:2px 6px; align-self:flex-start;">New</span>
+                  </sc-if>
+                </div>
+                <div style="display:flex; gap:6px; flex-wrap:wrap; margin:8px 0 0 16px;">
+                  <sc-for list="{{ ex.tags }}" as="tag" hint-placeholder-count="3">
+                    <span style="font-size:11px; color:#495057; background:#F1F3F5; border:0.5px solid #CED4DA; border-radius:4px; padding:2px 6px; white-space:nowrap;">{{ tag }}</span>
+                  </sc-for>
+                </div>
+                <div style="display:flex; align-items:center; margin:9px 0 0 16px;">
+                  <span style="font-size:11px; color:#6C757D;">{{ ex.age }}</span>
+                  <span style="{{ ex.slaStyle }}">{{ ex.sla }}</span>
+                  <span style="flex:1;"></span>
+                  <div style="width:18px; height:18px; border-radius:50%; background:#00B4D8; color:#0D1B2A; font-size:9px; font-weight:500; display:flex; align-items:center; justify-content:center; margin-right:5px;">{{ ex.ownerInitials }}</div>
+                  <span style="font-size:11px; color:#495057;">{{ ex.ownerName }}</span>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ listEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:32px 20px; text-align:center; font-size:12px; color:#6C757D;">No exceptions match this filter.</div>
+            </sc-if>
+          </div>
+
+          <!-- Zone 4: detail panel -->
+          <div style="flex:1; display:flex; flex-direction:column; min-width:0;">
+            <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ true }}">
+              <div style="flex:1; overflow-y:auto; padding:18px 20px 12px 20px;">
+
+                <!-- 1. Header -->
+                <div style="border-bottom:0.5px solid #CED4DA; padding-bottom:14px;">
+                  <div style="font-size:15px; font-weight:500; color:#212529; line-height:1.4;">{{ sel.title }}</div>
+                  <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;">
+                    <sc-for list="{{ sel.badges }}" as="badge" hint-placeholder-count="3">
+                      <span style="{{ badge.style }}">{{ badge.text }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <!-- 2. Impact analysis -->
+                <div style="margin-top:16px;">
+                  <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; padding-bottom:6px; border-bottom:0.5px solid #CED4DA;">Impact analysis</div>
+                  <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+                    <sc-for list="{{ sel.impactRows }}" as="row" hint-placeholder-count="5">
+                      <div style="display:flex; align-items:baseline;">
+                        <div style="width:130px; min-width:130px; font-size:13px; color:#6C757D;">{{ row.label }}</div>
+                        <div style="{{ row.valueStyle }}">{{ row.value }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <!-- 2b. Routing trace -->
+                <div style="margin-top:14px; background:#F8F9FA; border:0.5px solid #CED4DA; border-radius:8px; padding:10px 12px;">
+                  <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:8px;">Why this exception exists</div>
+                  <div style="display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex; align-items:baseline;">
+                      <div style="width:130px; min-width:130px; font-size:12px; color:#6C757D;">Created by rule</div>
+                      <div style="font-size:12px; font-weight:500; color:#212529;">{{ sel.traceRule }}</div>
+                    </div>
+                    <div style="display:flex; align-items:baseline;">
+                      <div style="width:130px; min-width:130px; font-size:12px; color:#6C757D;">Condition met</div>
+                      <div style="font-size:12px; color:#495057;">{{ sel.traceCond }}</div>
+                    </div>
+                    <div style="display:flex; align-items:baseline;">
+                      <div style="width:130px; min-width:130px; font-size:12px; color:#6C757D;">Routed to</div>
+                      <div style="font-size:12px; color:#495057;">{{ sel.traceRoute }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3. AI suggestion -->
+                <sc-if value="{{ sel.showAi }}" hint-placeholder-val="{{ true }}">
+                  <div title="This suggestion is generated by AI. Always verify before approving." style="background:#F3E8FF; border-left:4px solid #7B2FBE; border-radius:8px; padding:12px 14px; margin-top:16px;">
+                    <div style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:500; color:#7B2FBE;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                      <span>AI suggestion</span>
+                    </div>
+                    <div style="font-size:12px; color:#495057; line-height:1.6; margin-top:6px;">{{ sel.aiBody }}</div>
+                    <div style="font-size:12px; font-weight:500; color:#7B2FBE; margin-top:4px;">Confidence: {{ sel.aiConfidence }}</div>
+                  </div>
+                </sc-if>
+
+                <!-- 4. Activity timeline -->
+                <div style="margin-top:18px;">
+                  <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; padding-bottom:6px; border-bottom:0.5px solid #CED4DA;">Activity timeline</div>
+                  <div style="margin-top:12px;">
+                    <sc-for list="{{ sel.timeline }}" as="item" hint-placeholder-count="3">
+                      <div style="display:flex; gap:10px;">
+                        <div style="display:flex; flex-direction:column; align-items:center;">
+                          <div style="{{ item.dotStyle }}"></div>
+                          <div style="{{ item.lineStyle }}"></div>
+                        </div>
+                        <div style="padding-bottom:14px; flex:1;">
+                          <div style="display:flex; align-items:baseline; gap:8px;">
+                            <span style="font-size:12px; font-weight:500; color:#212529;">{{ item.who }}</span>
+                            <span style="font-size:11px; color:#6C757D;">{{ item.when }}</span>
+                          </div>
+                          <div style="font-size:12px; color:#495057; line-height:1.5; margin-top:2px;">{{ item.body }}</div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ noteOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:4px; margin-left:24px;">
+                      <textarea value="{{ noteText }}" onChange="{{ onNoteText }}" placeholder="Add a note to the timeline…" style="width:100%; height:64px; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; resize:vertical; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}"></textarea>
+                      <div style="display:flex; gap:8px; margin-top:6px;">
+                        <button onClick="{{ submitNote }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:6px 12px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">Add note</button>
+                        <button onClick="{{ cancelNote }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:6px 12px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Cancel</button>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+
+              <!-- 5. Action bar -->
+              <div style="min-height:56px; background:#FFFFFF; border-top:0.5px solid #CED4DA; display:flex; align-items:center; flex-wrap:wrap; gap:8px; padding:9px 20px;">
+                <sc-if value="{{ sel.showPrimary }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ askConfirm }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">{{ sel.primaryLabel }}</button>
+                </sc-if>
+                <sc-if value="{{ sel.showConfirm }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-size:12px; font-weight:500; color:#212529;">Confirm approval?</span>
+                  <input value="{{ signText }}" onChange="{{ onSignText }}" placeholder="{{ signPlaceholder }}" style="width:150px; border:0.5px solid #CED4DA; border-radius:8px; padding:6px 10px; font-size:12px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+                  <button onClick="{{ confirmApprove }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">Yes, approve</button>
+                  <button onClick="{{ cancelConfirm }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Cancel</button>
+                </sc-if>
+                <sc-if value="{{ sel.showApproved }}" hint-placeholder-val="{{ false }}">
+                  <button disabled="{{ true }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#2DC653; background:#E9F7EF; border:none; border-radius:8px; padding:7px 14px; cursor:default; white-space:nowrap;">Approved ✓</button>
+                </sc-if>
+                <button onClick="{{ openEscalate }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Escalate</button>
+                <button onClick="{{ openNote }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Add note</button>
+                <button onClick="{{ openSource }}" style="margin-left:auto; display:flex; align-items:center; gap:6px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">
+                  <span>Open in {{ sel.source }}</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ noSel }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:1; display:flex; align-items:center; justify-content:center; font-size:12px; color:#6C757D;">Select an exception to view details.</div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 2: MY ACTIONS ============ -->
+    <sc-if value="{{ isActions }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="My actions" style="flex:1; overflow-y:auto; padding:16px 20px;">
+        <div style="display:flex; flex-direction:column; gap:10px; max-width:860px;">
+          <sc-for list="{{ actionCards }}" as="act" hint-placeholder-count="4">
+            <div style="background:#F8F9FA; border-radius:10px; border:0.5px solid #CED4DA; padding:12px 14px; display:flex; align-items:center; gap:12px;">
+              <span style="{{ act.badgeStyle }}">{{ act.badgeText }}</span>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:13px; font-weight:500; color:#212529;">{{ act.title }}</div>
+                <div style="font-size:12px; color:#6C757D; margin-top:2px;">{{ act.context }}</div>
+              </div>
+              <sc-if value="{{ act.showBtn }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ act.onClick }}" style="{{ act.btnStyle }}" style-active="{{ btnActive }}">{{ act.btnLabel }}</button>
+              </sc-if>
+              <sc-if value="{{ act.showConfirm }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:12px; font-weight:500; color:#212529;">Confirm?</span>
+                <button onClick="{{ act.onYes }}" style="font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:5px 10px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">Yes</button>
+                <button onClick="{{ act.onNo }}" style="font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:5px 10px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Cancel</button>
+              </sc-if>
+            </div>
+          </sc-for>
+
+          <sc-if value="{{ hasCompleted }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-top:14px; padding-bottom:6px; border-bottom:0.5px solid #CED4DA;">Completed today</div>
+            <sc-for list="{{ completedCards }}" as="act" hint-placeholder-count="1">
+              <div style="background:#F8F9FA; border-radius:10px; border:0.5px solid #CED4DA; padding:12px 14px; display:flex; align-items:center; gap:12px; opacity:0.75;">
+                <span style="font-size:11px; font-weight:500; color:#2DC653; background:#E9F7EF; border-radius:4px; padding:3px 8px;">Done</span>
+                <div style="flex:1; font-size:13px; font-weight:500; color:#212529; text-decoration:line-through; text-decoration-color:#CED4DA;">{{ act.title }}</div>
+                <span style="font-size:12px; color:#2DC653; font-weight:500;">✓ Completed</span>
+              </div>
+            </sc-for>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 3: EXECUTIVE VIEW ============ -->
+    <sc-if value="{{ isExec }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Executive view" style="flex:1; overflow-y:auto;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:16px 20px;">
+
+          <!-- Exec KPI strip (full width) -->
+          <div style="grid-column:1 / -1; display:grid; grid-template-columns:repeat(4, 1fr); gap:12px;">
+            <div style="background:#F1F3F5; border-radius:12px; padding:14px; border:0.5px solid #CED4DA;">
+              <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D;">Value at risk — open</div>
+              <div style="font-size:26px; font-weight:500; color:#E63946; margin-top:6px;">€4.8M</div>
+              <div style="font-size:12px; color:#E63946; margin-top:4px;">↑ €0.6M vs last week</div>
+            </div>
+            <div style="background:#F1F3F5; border-radius:12px; padding:14px; border:0.5px solid #CED4DA;">
+              <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D;">Value protected — resolved</div>
+              <div style="font-size:26px; font-weight:500; color:#2DC653; margin-top:6px;">€3.4M</div>
+              <div style="font-size:12px; color:#2DC653; margin-top:4px;">↑ €1.1M vs last month</div>
+            </div>
+            <div style="background:#F1F3F5; border-radius:12px; padding:14px; border:0.5px solid #CED4DA;">
+              <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D;">Avg resolution time</div>
+              <div style="font-size:26px; font-weight:500; color:#00B4D8; margin-top:6px;">5.4h</div>
+              <div style="font-size:12px; color:#2DC653; margin-top:4px;">↓ 1.2h vs last month</div>
+            </div>
+            <div style="background:#F1F3F5; border-radius:12px; padding:14px; border:0.5px solid #CED4DA;">
+              <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D;">Escalations avoided</div>
+              <div style="font-size:26px; font-weight:500; color:#212529; margin-top:6px;">9 of 12</div>
+              <div style="font-size:12px; color:#6C757D; margin-top:4px;">Resolved at owner level</div>
+            </div>
+          </div>
+
+          <!-- Resolution trend (full width) -->
+          <div style="grid-column:1 / -1; background:#F1F3F5; border-radius:12px; padding:14px; border:0.5px solid #CED4DA;">
+            <div style="font-size:13px; font-weight:500; color:#212529;">Exception resolution trend</div>
+            <div style="font-size:11px; color:#6C757D; margin-top:2px;">Last 4 weeks</div>
+            <div style="display:flex; align-items:flex-end; gap:32px; height:80px; margin-top:14px; padding:0 8px;">
+              <sc-for list="{{ trendGroups }}" as="grp" hint-placeholder-count="4">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:4px; flex:1;">
+                  <div style="display:flex; align-items:flex-end; gap:4px; height:80px;">
+                    <sc-for list="{{ grp.bars }}" as="bar" hint-placeholder-count="3">
+                      <div style="{{ bar.style }}"></div>
+                    </sc-for>
+                  </div>
+                  <div style="font-size:9px; color:#6C757D;">{{ grp.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex; gap:16px; margin-top:12px;">
+              <div style="display:flex; align-items:center; gap:5px; font-size:11px; color:#495057;"><span style="width:8px; height:8px; border-radius:2px; background:#E63946; display:inline-block;"></span>Critical open</div>
+              <div style="display:flex; align-items:center; gap:5px; font-size:11px; color:#495057;"><span style="width:8px; height:8px; border-radius:2px; background:#F4A261; display:inline-block;"></span>High open</div>
+              <div style="display:flex; align-items:center; gap:5px; font-size:11px; color:#495057;"><span style="width:8px; height:8px; border-radius:2px; background:#2DC653; display:inline-block;"></span>Resolved</div>
+            </div>
+          </div>
+
+          <!-- Exceptions by source -->
+          <div style="background:#F1F3F5; border-radius:12px; padding:14px; border:0.5px solid #CED4DA;">
+            <div style="font-size:13px; font-weight:500; color:#212529; margin-bottom:12px;">Exceptions by source</div>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <sc-for list="{{ sourceBars }}" as="bar" hint-placeholder-count="4">
+                <div>
+                  <div style="display:flex; align-items:baseline; margin-bottom:5px;">
+                    <span style="font-size:12px; color:#495057; flex:1;">{{ bar.label }}</span>
+                    <span style="font-size:11px; color:#6C757D;">{{ bar.value }}</span>
+                  </div>
+                  <div style="height:6px; background:#CED4DA; border-radius:3px; overflow:hidden;">
+                    <div style="{{ bar.fillStyle }}"></div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <!-- Team response times -->
+          <div style="background:#F1F3F5; border-radius:12px; padding:14px; border:0.5px solid #CED4DA;">
+            <div style="font-size:13px; font-weight:500; color:#212529; margin-bottom:12px;">Team response times</div>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <sc-for list="{{ teamBars }}" as="bar" hint-placeholder-count="4">
+                <div>
+                  <div style="display:flex; align-items:baseline; margin-bottom:5px;">
+                    <span style="font-size:12px; color:#495057; flex:1;">{{ bar.label }}</span>
+                    <span style="font-size:11px; color:#6C757D;">{{ bar.value }}</span>
+                  </div>
+                  <div style="height:6px; background:#CED4DA; border-radius:3px; overflow:hidden;">
+                    <div style="{{ bar.fillStyle }}"></div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <!-- Value at risk -->
+          <div style="background:#F1F3F5; border-radius:12px; padding:14px; border:0.5px solid #CED4DA;">
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D;">Value at risk — open</div>
+            <div style="font-size:26px; font-weight:500; color:#E63946; margin-top:6px;">€4.8M</div>
+            <div style="font-size:12px; color:#E63946; margin-top:4px;">↑ €0.6M vs last week</div>
+            <div style="font-size:12px; color:#495057; margin-top:6px;">Largest contributor: Lonza capacity shortfall (€2.1M)</div>
+          </div>
+
+          <!-- On-time completion -->
+          <div style="background:#F1F3F5; border-radius:12px; padding:14px; border:0.5px solid #CED4DA;">
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D;">Actions completed on time</div>
+            <div style="font-size:26px; font-weight:500; color:#F4A261; margin-top:6px;">82%</div>
+            <div style="font-size:12px; color:#6C757D; margin-top:4px;">Target: 85%</div>
+            <div style="font-size:12px; color:#2DC653; margin-top:6px;">↑ 4pts vs last month</div>
+          </div>
+
+          <!-- Partner performance (full width, embedded summary) -->
+          <div style="grid-column:1 / -1; background:#F1F3F5; border-radius:12px; padding:14px; border:0.5px solid #CED4DA;">
+            <div style="display:flex; align-items:center; margin-bottom:10px;">
+              <div style="flex:1;">
+                <div style="font-size:13px; font-weight:500; color:#212529;">Partner performance</div>
+                <div style="font-size:11px; color:#6C757D; margin-top:2px;">CMO, supplier and 3PL summary — click a row to drill into their exceptions</div>
+              </div>
+              <button onClick="{{ goPartners }}" style="font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:5px 10px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Full partner network →</button>
+            </div>
+            <div style="display:flex; flex-direction:column;">
+              <sc-for list="{{ partnerRows }}" as="p" hint-placeholder-count="5">
+                <div onClick="{{ p.onClick }}" style="display:flex; align-items:center; gap:12px; padding:8px 4px; border-bottom:0.5px solid #CED4DA; cursor:pointer;" style-hover="{{ rowHover }}">
+                  <span style="font-size:12px; font-weight:500; color:#212529; width:150px; min-width:150px;">{{ p.name }}</span>
+                  <span style="font-size:11px; font-weight:500; color:#495057; background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:4px; padding:2px 8px;">{{ p.type }}</span>
+                  <span style="{{ p.openStyle }}">{{ p.open }}</span>
+                  <span style="flex:1;"></span>
+                  <span style="{{ p.respStyle }}">{{ p.resp }}</span>
+                  <span style="{{ p.statusStyle }}">{{ p.status }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 4: PARTNER NETWORK ============ -->
+    <sc-if value="{{ isPartners }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Partner network" style="flex:1; overflow-y:auto; padding:16px 20px;">
+        <table style="width:100%; border-collapse:collapse; background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; overflow:hidden;">
+          <thead>
+            <tr>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Partner name</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Type</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Open exceptions</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Avg response time</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ partnerRows }}" as="p" hint-placeholder-count="5">
+              <tr onClick="{{ p.onClick }}" style="{{ p.rowStyle }}" style-hover="{{ rowHover }}">
+                <td style="padding:10px 14px; height:18px; vertical-align:middle;"><span onClick="{{ p.onName }}" style="font-size:12px; font-weight:500; color:#212529; cursor:pointer; border-bottom:1px dotted #CED4DA;" style-hover="{{ nameHover }}">{{ p.name }}</span></td>
+                <td style="padding:10px 14px; height:18px; vertical-align:middle;"><span style="font-size:11px; font-weight:500; color:#495057; background:#F1F3F5; border:0.5px solid #CED4DA; border-radius:4px; padding:3px 8px;">{{ p.type }}</span></td>
+                <td style="padding:10px 14px; height:18px; vertical-align:middle;"><span style="{{ p.openStyle }}">{{ p.open }}</span></td>
+                <td style="padding:10px 14px; height:18px; vertical-align:middle;"><span style="{{ p.respStyle }}">{{ p.resp }}</span></td>
+                <td style="padding:10px 14px; height:18px; vertical-align:middle;"><span style="{{ p.statusStyle }}">{{ p.status }}</span></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+        <div style="font-size:11px; color:#6C757D; margin-top:10px;">Click a partner to filter the exception queue to that partner.</div>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 5: INTEGRATIONS ============ -->
+    <sc-if value="{{ isIntegrations }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Integrations" style="flex:1; overflow-y:auto; padding:16px 20px;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:12px;">
+          <sc-for list="{{ integrationCards }}" as="ig" hint-placeholder-count="6">
+            <div style="background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="{{ ig.logoStyle }}">{{ ig.initial }}</div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:13px; font-weight:500; color:#212529;">{{ ig.name }}</div>
+                  <div style="font-size:11px; color:#6C757D;">{{ ig.dir }}</div>
+                </div>
+                <span style="{{ ig.statusStyle }}">{{ ig.status }}</span>
+              </div>
+              <div style="font-size:12px; color:#495057; line-height:1.5; flex:1;">{{ ig.desc }}</div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:11px; color:#6C757D; flex:1;">{{ ig.last }}</span>
+                <button onClick="{{ ig.toggle }}" style="{{ ig.btnStyle }}" style-active="{{ btnActive }}">{{ ig.btnLabel }}</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; padding:14px; margin-top:12px;">
+          <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; padding-bottom:8px; border-bottom:0.5px solid #CED4DA;">Recent sync log</div>
+          <sc-for list="{{ syncLog }}" as="sl" hint-placeholder-count="5">
+            <div style="display:flex; gap:12px; padding:8px 0; border-bottom:0.5px solid #F1F3F5; font-size:12px;">
+              <span style="color:#6C757D; width:96px; min-width:96px;">{{ sl.time }}</span>
+              <span style="font-weight:500; color:#212529; width:90px; min-width:90px;">{{ sl.sys }}</span>
+              <span style="color:#495057; flex:1;">{{ sl.msg }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 6: ALERT RULES ============ -->
+    <sc-if value="{{ isRules }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Alert rules" style="flex:1; overflow-y:auto; padding:16px 20px;">
+        <div style="display:flex; flex-direction:column; gap:10px; max-width:960px;">
+          <div style="display:flex; align-items:center;">
+            <div style="font-size:12px; color:#6C757D; flex:1;">Rules run on every sync: condition → severity → routed role. Every change is audited.</div>
+            <button onClick="{{ openNewRule }}" style="display:flex; align-items:center; gap:6px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>New rule</span>
+            </button>
+          </div>
+          <sc-for list="{{ ruleRows }}" as="r" hint-placeholder-count="5">
+            <div style="background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; padding:12px 14px; display:flex; align-items:center; gap:14px;">
+              <div onClick="{{ r.toggle }}" style="{{ r.switchStyle }}">
+                <div style="{{ r.knobStyle }}"></div>
+              </div>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:13px; font-weight:500; color:#212529;">{{ r.name }}</div>
+                <div style="font-size:12px; color:#6C757D; margin-top:2px; font-family:ui-monospace,monospace;">{{ r.cond }}</div>
+              </div>
+              <span style="{{ r.sevStyle }}">{{ r.sev }}</span>
+              <div style="font-size:12px; color:#495057; white-space:nowrap;">→ {{ r.route }}</div>
+              <button onClick="{{ r.onEdit }}" style="font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:4px 10px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Edit</button>
+            </div>
+          </sc-for>
+          <div style="font-size:11px; color:#6C757D; margin-top:4px;">Rules evaluate on every sync. A matched rule creates the exception, sets severity, and routes to the owning role — the trace is visible on each exception under "Why this exception exists".</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 7: TEAMS ============ -->
+    <sc-if value="{{ isTeams }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Teams" style="flex:1; overflow-y:auto; padding:16px 20px;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:12px;">
+          <sc-for list="{{ teamCards }}" as="tm" hint-placeholder-count="5">
+            <div style="background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; padding:14px;">
+              <div style="display:flex; align-items:baseline; gap:8px;">
+                <div style="font-size:13px; font-weight:500; color:#212529; flex:1;">{{ tm.name }}</div>
+                <span style="font-size:11px; color:#6C757D;">{{ tm.count }} members</span>
+              </div>
+              <div style="font-size:12px; color:#495057; margin-top:4px;">Lead: <span style="font-weight:500; color:#212529;">{{ tm.lead }}</span></div>
+              <div style="display:flex; gap:4px; margin-top:10px; flex-wrap:wrap;">
+                <sc-for list="{{ tm.avatars }}" as="av" hint-placeholder-count="4">
+                  <div title="{{ av.name }}" style="width:24px; height:24px; border-radius:50%; background:#CAF0F8; color:#0D1B2A; font-size:10px; font-weight:500; display:flex; align-items:center; justify-content:center;">{{ av.init }}</div>
+                </sc-for>
+              </div>
+              <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-top:12px;">Escalation path</div>
+              <div style="font-size:12px; color:#495057; margin-top:4px;">{{ tm.esc }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 8: AUDIT LOG ============ -->
+    <sc-if value="{{ isAudit }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Audit log" style="flex:1; overflow-y:auto; padding:16px 20px;">
+        <div style="display:flex; align-items:center; margin-bottom:10px;">
+          <div style="font-size:12px; color:#6C757D; flex:1;">Append-only record of every event and action. Nothing can be edited or deleted.</div>
+          <button onClick="{{ exportAudit }}" style="display:flex; align-items:center; gap:5px; font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:5px 10px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Export audit CSV</span>
+          </button>
+        </div>
+        <table style="width:100%; border-collapse:collapse; background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; overflow:hidden;">
+          <thead>
+            <tr>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">When</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Actor</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Type</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Exception</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Entry</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ auditRows }}" as="ar" hint-placeholder-count="8">
+              <tr style="{{ ar.rowStyle }}">
+                <td style="padding:10px 14px; vertical-align:top; font-size:11px; color:#6C757D; white-space:nowrap;">{{ ar.when }}</td>
+                <td style="padding:10px 14px; vertical-align:top; font-size:12px; font-weight:500; color:#212529; white-space:nowrap;">{{ ar.who }}</td>
+                <td style="padding:10px 14px; vertical-align:top;"><span style="{{ ar.kindStyle }}">{{ ar.kind }}</span></td>
+                <td style="padding:10px 14px; vertical-align:top; font-size:12px; color:#495057; max-width:220px;">{{ ar.ex }}</td>
+                <td style="padding:10px 14px; vertical-align:top; font-size:12px; color:#495057;">{{ ar.body }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 9: USERS & PERMISSIONS ============ -->
+    <sc-if value="{{ isUsers }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Users and permissions" style="flex:1; overflow-y:auto; padding:16px 20px;">
+        <div style="display:flex; align-items:center; margin-bottom:10px;">
+          <div style="font-size:12px; color:#6C757D; flex:1;">Users sign in via Microsoft Entra ID (SSO). Roles control what each user can see and approve.</div>
+          <button onClick="{{ openInvite }}" style="display:flex; align-items:center; gap:6px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Invite user</span>
+          </button>
+        </div>
+        <table style="width:100%; border-collapse:collapse; background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; overflow:hidden;">
+          <thead>
+            <tr>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">User</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Team</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Role</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Status</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Last active</th>
+              <th style="background:#0D1B2A; color:#FFFFFF; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; text-align:left; padding:10px 14px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ userRows }}" as="u" hint-placeholder-count="7">
+              <tr style="{{ u.rowStyle }}">
+                <td style="padding:10px 14px; vertical-align:middle;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <div style="width:24px; height:24px; border-radius:50%; background:#00B4D8; color:#0D1B2A; font-size:10px; font-weight:500; display:flex; align-items:center; justify-content:center;">{{ u.init }}</div>
+                    <span style="font-size:12px; font-weight:500; color:#212529; white-space:nowrap;">{{ u.name }}</span>
+                  </div>
+                </td>
+                <td style="padding:10px 14px; vertical-align:middle; font-size:12px; color:#495057;">{{ u.team }}</td>
+                <td style="padding:10px 14px; vertical-align:middle;">
+                  <select value="{{ u.role }}" onChange="{{ u.onRole }}" style="border:0.5px solid #CED4DA; border-radius:8px; padding:4px 8px; font-size:12px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+                    <option value="Planner">Planner</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Director">Director</option>
+                    <option value="Partner">Partner</option>
+                    <option value="Admin">Admin</option>
+                  </select>
+                </td>
+                <td style="padding:10px 14px; vertical-align:middle;"><span style="{{ u.statusStyle }}">{{ u.status }}</span></td>
+                <td style="padding:10px 14px; vertical-align:middle; font-size:11px; color:#6C757D; white-space:nowrap;">{{ u.last }}</td>
+                <td style="padding:10px 14px; vertical-align:middle;">
+                  <button onClick="{{ u.onToggle }}" style="font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:4px 10px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">{{ u.toggleLabel }}</button>
+                </td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+
+        <div style="background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; padding:14px; margin-top:12px;">
+          <div style="font-size:13px; font-weight:500; color:#212529;">Permissions by role</div>
+          <div style="font-size:11px; color:#6C757D; margin-top:2px; margin-bottom:10px;">Enforced via Entra ID role claims. Every permission change is written to the audit log.</div>
+          <table style="width:100%; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; text-align:left; padding:6px 10px; border-bottom:0.5px solid #CED4DA;">Capability</th>
+                <th style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; text-align:center; padding:6px 10px; border-bottom:0.5px solid #CED4DA;">Planner</th>
+                <th style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; text-align:center; padding:6px 10px; border-bottom:0.5px solid #CED4DA;">Manager</th>
+                <th style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; text-align:center; padding:6px 10px; border-bottom:0.5px solid #CED4DA;">Director</th>
+                <th style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; text-align:center; padding:6px 10px; border-bottom:0.5px solid #CED4DA;">Partner</th>
+                <th style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; text-align:center; padding:6px 10px; border-bottom:0.5px solid #CED4DA;">Admin</th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ permRows }}" as="pm" hint-placeholder-count="9">
+                <tr style="{{ pm.rowStyle }}">
+                  <td style="font-size:12px; color:#495057; padding:7px 10px;">{{ pm.cap }}</td>
+                  <td style="font-size:12px; text-align:center; padding:7px 10px; color:#2DC653;">{{ pm.c1 }}</td>
+                  <td style="font-size:12px; text-align:center; padding:7px 10px; color:#2DC653;">{{ pm.c2 }}</td>
+                  <td style="font-size:12px; text-align:center; padding:7px 10px; color:#2DC653;">{{ pm.c3 }}</td>
+                  <td style="font-size:12px; text-align:center; padding:7px 10px; color:#6C757D;">{{ pm.c4 }}</td>
+                  <td style="font-size:12px; text-align:center; padding:7px 10px; color:#2DC653;">{{ pm.c5 }}</td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 10: WORKSPACE SETTINGS ============ -->
+    <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Workspace settings" style="flex:1; overflow-y:auto; padding:16px 20px;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:12px; max-width:1100px;">
+
+          <div style="background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; padding:14px;">
+            <div style="font-size:13px; font-weight:500; color:#212529;">SLA targets</div>
+            <div style="font-size:11px; color:#6C757D; margin-top:2px; margin-bottom:12px;">Hours to first action by severity. Drives the SLA countdown on every exception card.</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{ slaRows }}" as="sr" hint-placeholder-count="3">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span style="{{ sr.dotStyle }}"></span>
+                  <span style="font-size:12px; color:#495057; flex:1;">{{ sr.label }}</span>
+                  <input type="number" value="{{ sr.value }}" onChange="{{ sr.onChange }}" min="1" max="72" style="width:64px; border:0.5px solid #CED4DA; border-radius:8px; padding:5px 8px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+                  <span style="font-size:11px; color:#6C757D;">hours</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; padding:14px;">
+            <div style="font-size:13px; font-weight:500; color:#212529;">Feature options</div>
+            <div style="font-size:11px; color:#6C757D; margin-top:2px; margin-bottom:12px;">Workspace-level switches. Changes apply to all users on next load.</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{ featureRows }}" as="fr" hint-placeholder-count="4">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div onClick="{{ fr.toggle }}" style="{{ fr.switchStyle }}">
+                    <div style="{{ fr.knobStyle }}"></div>
+                  </div>
+                  <div style="flex:1;">
+                    <div style="font-size:12px; color:#212529; font-weight:500;">{{ fr.label }}</div>
+                    <div style="font-size:11px; color:#6C757D;">{{ fr.sub }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; padding:14px;">
+            <div style="font-size:13px; font-weight:500; color:#212529;">Organisation</div>
+            <div style="font-size:11px; color:#6C757D; margin-top:2px; margin-bottom:12px;">Identity, reporting currency and compliance retention.</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:12px; color:#495057; flex:1;">Reporting currency</span>
+                <select value="{{ setCurrency }}" onChange="{{ onSetCurrency }}" style="border:0.5px solid #CED4DA; border-radius:8px; padding:5px 8px; font-size:12px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+                  <option value="EUR">EUR €</option>
+                  <option value="USD">USD $</option>
+                  <option value="GBP">GBP £</option>
+                  <option value="CHF">CHF</option>
+                </select>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:12px; color:#495057; flex:1;">Audit retention</span>
+                <select value="{{ setRetention }}" onChange="{{ onSetRetention }}" style="border:0.5px solid #CED4DA; border-radius:8px; padding:5px 8px; font-size:12px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+                  <option value="5 years">5 years</option>
+                  <option value="7 years">7 years (GxP default)</option>
+                  <option value="10 years">10 years</option>
+                </select>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:12px; color:#495057; flex:1;">SSO provider</span>
+                <span style="font-size:12px; color:#212529; font-weight:500;">Microsoft Entra ID</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:12px; color:#495057; flex:1;">Allowed sign-in domain</span>
+                <span style="font-size:12px; color:#212529; font-weight:500;">wigmoreit.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button onClick="{{ saveSettings }}" style="margin-top:14px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">Save settings</button>
+      </div>
+    </sc-if>
+
+    <!-- ============ PLACEHOLDER SCREENS ============ -->
+    <sc-if value="{{ isPlaceholder }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Coming soon" style="flex:1; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+        <div style="font-size:15px; font-weight:500; color:#212529;">{{ placeholderTitle }}</div>
+        <div style="font-size:12px; color:#6C757D;">Coming soon — planned for Phase 2.</div>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- ============ RAISE EXCEPTION MODAL ============ -->
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ overlayClose }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:100; display:flex; align-items:center; justify-content:center;">
+      <div onClick="{{ stopProp }}" style="width:400px; background:#FFFFFF; border-radius:12px; border:0.5px solid #CED4DA; box-shadow:0 20px 60px rgba(0,0,0,0.2); max-height:88vh; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; padding:16px 20px; border-bottom:0.5px solid #CED4DA;">
+          <div style="flex:1; font-size:14px; font-weight:500; color:#212529;">Raise exception</div>
+          <div onClick="{{ overlayClose }}" style="cursor:pointer; color:#6C757D; display:flex;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </div>
+        </div>
+        <div style="padding:16px 20px; overflow-y:auto; display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Exception title *</div>
+            <input value="{{ formTitle }}" onChange="{{ onFormTitle }}" placeholder="e.g. QC hold on Batch X-4421" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+            <sc-if value="{{ errTitle }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px; color:#E63946; margin-top:4px;">Exception title is required.</div></sc-if>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Severity *</div>
+            <select value="{{ formSeverity }}" onChange="{{ onFormSeverity }}" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+              <option value="">Select severity…</option>
+              <option value="Critical">● Critical</option>
+              <option value="High">● High</option>
+              <option value="Medium">● Medium</option>
+            </select>
+            <sc-if value="{{ errSeverity }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px; color:#E63946; margin-top:4px;">Severity is required.</div></sc-if>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Source system</div>
+            <select value="{{ formSource }}" onChange="{{ onFormSource }}" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+              <option value="Manual">Manual</option>
+              <option value="Axon">Axon</option>
+              <option value="Helion">Helion</option>
+              <option value="Anaplan">Anaplan</option>
+              <option value="SAP">SAP</option>
+              <option value="Binocs">Binocs</option>
+            </select>
+          </div>
+          <div style="position:relative;">
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Owner *</div>
+            <input value="{{ formOwner }}" onChange="{{ onFormOwner }}" placeholder="Search by name or team…" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+            <sc-if value="{{ showOwnerMatches }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; left:0; right:0; top:100%; background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:8px; z-index:10; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+                <sc-for list="{{ ownerMatches }}" as="u" hint-placeholder-count="2">
+                  <div onClick="{{ u.pick }}" style="padding:8px 10px; cursor:pointer;" style-hover="{{ matchHover }}">
+                    <div style="font-size:13px; color:#212529;">{{ u.name }}</div>
+                    <div style="font-size:11px; color:#6C757D;">{{ u.role }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ errOwner }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px; color:#E63946; margin-top:4px;">Owner is required.</div></sc-if>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Due date</div>
+            <input type="datetime-local" value="{{ formDue }}" onChange="{{ onFormDue }}" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Notes / context</div>
+            <textarea value="{{ formNotes }}" onChange="{{ onFormNotes }}" placeholder="Add any context that helps the owner act quickly…" style="width:100%; height:80px; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; resize:vertical; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}"></textarea>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; padding:14px 20px; border-top:0.5px solid #CED4DA;">
+          <sc-if value="{{ discardAsk }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size:12px; font-weight:500; color:#212529; align-self:center; margin-right:auto;">Discard changes?</span>
+            <button onClick="{{ keepEditing }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}">Keep</button>
+            <button onClick="{{ discardModal }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#E63946; background:#FDECEC; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;">Discard</button>
+          </sc-if>
+          <sc-if value="{{ notDiscardAsk }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ overlayClose }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Cancel</button>
+            <button onClick="{{ submitModal }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">Submit exception</button>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ ESCALATE MODAL ============ -->
+  <sc-if value="{{ escalateOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeEscalate }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:100; display:flex; align-items:center; justify-content:center;">
+      <div onClick="{{ stopProp }}" style="width:400px; background:#FFFFFF; border-radius:12px; border:0.5px solid #CED4DA; box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+        <div style="display:flex; align-items:center; padding:16px 20px; border-bottom:0.5px solid #CED4DA;">
+          <div style="flex:1; font-size:14px; font-weight:500; color:#212529;">Escalate exception</div>
+          <div onClick="{{ closeEscalate }}" style="cursor:pointer; color:#6C757D; display:flex;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </div>
+        </div>
+        <div style="padding:16px 20px; display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Escalate to *</div>
+            <select value="{{ escTo }}" onChange="{{ onEscTo }}" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+              <option value="">Select from escalation path…</option>
+              <option value="Site Director — L. Vermeulen">Site Director — L. Vermeulen</option>
+              <option value="Supply Chain Director — A. Janssens">Supply Chain Director — A. Janssens</option>
+              <option value="VP Supply Chain — C. Moreau">VP Supply Chain — C. Moreau</option>
+            </select>
+            <sc-if value="{{ errEscTo }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px; color:#E63946; margin-top:4px;">Escalation target is required.</div></sc-if>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Deadline</div>
+            <input type="datetime-local" value="{{ escDeadline }}" onChange="{{ onEscDeadline }}" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Note</div>
+            <textarea value="{{ escNote }}" onChange="{{ onEscNote }}" placeholder="Why is this being escalated?" style="width:100%; height:64px; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; resize:vertical; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}"></textarea>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; padding:14px 20px; border-top:0.5px solid #CED4DA;">
+          <button onClick="{{ closeEscalate }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Cancel</button>
+          <button onClick="{{ submitEscalate }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">Send escalation</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ RULE EDITOR MODAL ============ -->
+  <sc-if value="{{ ruleModalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeRuleModal }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:100; display:flex; align-items:center; justify-content:center;">
+      <div onClick="{{ stopProp }}" style="width:440px; background:#FFFFFF; border-radius:12px; border:0.5px solid #CED4DA; box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+        <div style="display:flex; align-items:center; padding:16px 20px; border-bottom:0.5px solid #CED4DA;">
+          <div style="flex:1; font-size:14px; font-weight:500; color:#212529;">{{ ruleModalTitle }}</div>
+          <div onClick="{{ closeRuleModal }}" style="cursor:pointer; color:#6C757D; display:flex;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </div>
+        </div>
+        <div style="padding:16px 20px; display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Rule name *</div>
+            <input value="{{ ruleName }}" onChange="{{ onRuleName }}" placeholder="e.g. Safety stock breach" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+            <sc-if value="{{ errRuleName }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px; color:#E63946; margin-top:4px;">Rule name is required.</div></sc-if>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Condition *</div>
+            <input value="{{ ruleCond }}" onChange="{{ onRuleCond }}" placeholder="e.g. Axon stock < 50% of policy days" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:ui-monospace,monospace; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+            <sc-if value="{{ errRuleCond }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px; color:#E63946; margin-top:4px;">Condition is required.</div></sc-if>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div>
+              <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Severity</div>
+              <select value="{{ ruleSev }}" onChange="{{ onRuleSev }}" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+                <option value="Critical">Critical</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Route to</div>
+              <select value="{{ ruleRoute }}" onChange="{{ onRuleRoute }}" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+                <option value="QC Ops Lead">QC Ops Lead</option>
+                <option value="SC Planner">SC Planner</option>
+                <option value="External Mfg Manager">External Mfg Manager</option>
+                <option value="Procurement Lead">Procurement Lead</option>
+                <option value="Demand Planner">Demand Planner</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; padding:14px 20px; border-top:0.5px solid #CED4DA;">
+          <button onClick="{{ closeRuleModal }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Cancel</button>
+          <button onClick="{{ submitRule }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">{{ ruleSubmitLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ INVITE USER MODAL ============ -->
+  <sc-if value="{{ inviteOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeInvite }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:100; display:flex; align-items:center; justify-content:center;">
+      <div onClick="{{ stopProp }}" style="width:400px; background:#FFFFFF; border-radius:12px; border:0.5px solid #CED4DA; box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+        <div style="display:flex; align-items:center; padding:16px 20px; border-bottom:0.5px solid #CED4DA;">
+          <div style="flex:1; font-size:14px; font-weight:500; color:#212529;">Invite user</div>
+          <div onClick="{{ closeInvite }}" style="cursor:pointer; color:#6C757D; display:flex;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </div>
+        </div>
+        <div style="padding:16px 20px; display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Full name *</div>
+            <input value="{{ invName }}" onChange="{{ onInvName }}" placeholder="e.g. Lena Fischer" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+            <sc-if value="{{ errInvName }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px; color:#E63946; margin-top:4px;">Name is required.</div></sc-if>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Work email *</div>
+            <input value="{{ invEmail }}" onChange="{{ onInvEmail }}" placeholder="name@wigmoreit.com" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+            <sc-if value="{{ errInvEmail }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px; color:#E63946; margin-top:4px;">A valid email is required.</div></sc-if>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Role</div>
+            <select value="{{ invRole }}" onChange="{{ onInvRole }}" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+              <option value="Planner">Planner — work the queue, approve own actions</option>
+              <option value="Manager">Manager — team queue, escalations, rules</option>
+              <option value="Director">Director — executive view, escalation target</option>
+              <option value="Partner">Partner — own exceptions only (portal)</option>
+              <option value="Admin">Admin — full workspace control</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:5px;">Team</div>
+            <select value="{{ invTeam }}" onChange="{{ onInvTeam }}" style="width:100%; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+              <option value="QC Ops">QC Ops</option>
+              <option value="SC Planning">SC Planning</option>
+              <option value="External Mfg">External Mfg</option>
+              <option value="Procurement">Procurement</option>
+              <option value="Demand Planning">Demand Planning</option>
+              <option value="IT / Operations">IT / Operations</option>
+              <option value="External">External (partner)</option>
+            </select>
+          </div>
+          <div style="font-size:11px; color:#6C757D; line-height:1.5;">The user receives an email invite and signs in with their company account via Entra ID. No password is created in NEXUS.</div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; padding:14px 20px; border-top:0.5px solid #CED4DA;">
+          <button onClick="{{ closeInvite }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">Cancel</button>
+          <button onClick="{{ submitInvite }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">Send invite</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ NOTIFICATIONS PANEL ============ -->
+  <sc-if value="{{ notifOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeNotif }}" style="position:fixed; inset:0; z-index:150;">
+      <div onClick="{{ stopProp }}" style="position:absolute; top:60px; right:16px; width:360px; background:#FFFFFF; border:0.5px solid #CED4DA; border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,0.2); overflow:hidden;">
+        <div style="display:flex; align-items:center; padding:12px 14px; border-bottom:0.5px solid #CED4DA;">
+          <div style="flex:1; font-size:13px; font-weight:500; color:#212529;">Notifications</div>
+          <button onClick="{{ markAllRead }}" style="font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; color:#0099BB; background:transparent; border:none; cursor:pointer; padding:0;">Mark all read</button>
+        </div>
+        <div style="max-height:280px; overflow-y:auto;">
+          <sc-for list="{{ notifItems }}" as="n" hint-placeholder-count="4">
+            <div style="{{ n.style }}">
+              <div style="{{ n.dotStyle }}"></div>
+              <div style="flex:1;">
+                <div style="font-size:12px; color:#212529; line-height:1.45;">{{ n.text }}</div>
+                <div style="font-size:11px; color:#6C757D; margin-top:2px;">{{ n.time }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="border-top:0.5px solid #CED4DA; padding:12px 14px;">
+          <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:8px;">Delivery channels</div>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
+            <sc-for list="{{ chanRows }}" as="ch" hint-placeholder-count="3">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div onClick="{{ ch.toggle }}" style="{{ ch.switchStyle }}">
+                  <div style="{{ ch.knobStyle }}"></div>
+                </div>
+                <span style="font-size:12px; color:#495057; flex:1;">{{ ch.label }}</span>
+                <span style="font-size:11px; color:#6C757D;">{{ ch.sub }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-bottom:8px;">Notify me about</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <sc-for list="{{ notifToggleRows }}" as="tg" hint-placeholder-count="4">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div onClick="{{ tg.toggle }}" style="{{ tg.switchStyle }}">
+                  <div style="{{ tg.knobStyle }}"></div>
+                </div>
+                <span style="font-size:12px; color:#495057;">{{ tg.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ AI CHAT DOCK ============ -->
+  <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; top:0; right:0; bottom:0; width:360px; background:#FFFFFF; border-left:0.5px solid #CED4DA; z-index:150; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+      <div style="display:flex; align-items:center; gap:8px; padding:14px 16px; border-bottom:0.5px solid #CED4DA;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7B2FBE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <div style="flex:1; font-size:13px; font-weight:500; color:#212529;">NEXUS assistant</div>
+        <span style="font-size:11px; font-weight:500; color:#7B2FBE; background:#F3E8FF; border-radius:4px; padding:3px 8px;">AI</span>
+        <div onClick="{{ toggleChat }}" style="cursor:pointer; color:#6C757D; display:flex; margin-left:4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </div>
+      </div>
+      <div style="flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:10px;">
+        <sc-for list="{{ chatMsgs }}" as="m" hint-placeholder-count="1">
+          <div style="{{ m.rowStyle }}">
+            <div style="{{ m.bubbleStyle }}">{{ m.text }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding:0 16px 8px 16px; display:flex; gap:6px; flex-wrap:wrap;">
+        <sc-for list="{{ chatPrompts }}" as="cp" hint-placeholder-count="3">
+          <button onClick="{{ cp.onClick }}" style="font-family:Inter,system-ui,sans-serif; font-size:11px; font-weight:500; color:#7B2FBE; background:transparent; border:0.5px solid #7B2FBE; border-radius:20px; padding:4px 12px; cursor:pointer; white-space:nowrap;" style-hover="{{ promptHover }}" style-active="{{ btnActive }}">{{ cp.label }}</button>
+        </sc-for>
+      </div>
+      <div style="border-top:0.5px solid #CED4DA; padding:12px 16px;">
+        <div style="display:flex; gap:8px;">
+          <input value="{{ chatInput }}" onChange="{{ onChatInput }}" onKeyDown="{{ onChatKey }}" placeholder="Ask about your queue…" style="flex:1; border:0.5px solid #CED4DA; border-radius:8px; padding:8px 10px; font-size:13px; font-family:Inter,system-ui,sans-serif; color:#495057; outline:none; background:#FFFFFF;" style-focus="{{ inputFocus }}">
+          <button onClick="{{ sendChat }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">Send</button>
+        </div>
+        <div style="font-size:11px; color:#7B2FBE; margin-top:6px;">AI-generated — always verify before acting.</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ PARTNER SCORECARD ============ -->
+  <sc-if value="{{ scorecardOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeScorecard }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.2); z-index:150;">
+      <div onClick="{{ stopProp }}" style="position:absolute; top:0; right:0; bottom:0; width:380px; background:#FFFFFF; border-left:0.5px solid #CED4DA; box-shadow:0 20px 60px rgba(0,0,0,0.2); padding:18px 20px; overflow-y:auto;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div style="flex:1;">
+            <div style="font-size:15px; font-weight:500; color:#212529;">{{ scorecard.name }}</div>
+            <div style="font-size:12px; color:#6C757D; margin-top:2px;">{{ scorecard.type }} · 90-day scorecard</div>
+          </div>
+          <div onClick="{{ closeScorecard }}" style="cursor:pointer; color:#6C757D; display:flex;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </div>
+        </div>
+        <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-top:20px; padding-bottom:6px; border-bottom:0.5px solid #CED4DA;">Avg response time</div>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+          <sc-for list="{{ scorecard.respRows }}" as="rr" hint-placeholder-count="3">
+            <div>
+              <div style="display:flex; align-items:baseline; margin-bottom:5px;">
+                <span style="font-size:12px; color:#495057; flex:1;">{{ rr.m }}</span>
+                <span style="font-size:11px; color:#6C757D;">{{ rr.v }}</span>
+              </div>
+              <div style="height:6px; background:#CED4DA; border-radius:3px; overflow:hidden;"><div style="{{ rr.barStyle }}"></div></div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; color:#6C757D; margin-top:20px; padding-bottom:6px; border-bottom:0.5px solid #CED4DA;">Exceptions opened</div>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+          <sc-for list="{{ scorecard.cntRows }}" as="cr" hint-placeholder-count="3">
+            <div>
+              <div style="display:flex; align-items:baseline; margin-bottom:5px;">
+                <span style="font-size:12px; color:#495057; flex:1;">{{ cr.m }}</span>
+                <span style="font-size:11px; color:#6C757D;">{{ cr.v }}</span>
+              </div>
+              <div style="height:6px; background:#CED4DA; border-radius:3px; overflow:hidden;"><div style="{{ cr.barStyle }}"></div></div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:20px; flex-wrap:wrap;">
+          <button onClick="{{ scorecard.filterQueue }}" style="font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#0D1B2A; background:#00B4D8; border:none; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap;" style-hover="{{ primaryBtnHover }}" style-active="{{ btnActive }}">View this partner's exceptions</button>
+          <a href="PartnerPortal.dc.html" style="display:flex; align-items:center; gap:6px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:500; color:#212529; background:transparent; border:0.5px solid #CED4DA; border-radius:8px; padding:7px 14px; cursor:pointer; white-space:nowrap; text-decoration:none;" style-hover="{{ outlineBtnHover }}" style-active="{{ btnActive }}">
+            <span>Open partner portal</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ TOASTS ============ -->
+  <div style="position:fixed; bottom:16px; right:16px; z-index:200; display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+    <sc-for list="{{ toasts }}" as="t" hint-placeholder-count="0">
+      <div style="background:#0D1B2A; color:#FFFFFF; font-size:13px; padding:10px 16px; border-radius:8px; display:flex; align-items:center; gap:8px; animation:toastIn 0.3s ease;">
+        <sc-if value="{{ t.ok }}" hint-placeholder-val="{{ true }}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2DC653" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </sc-if>
+        <sc-if value="{{ t.err }}" hint-placeholder-val="{{ false }}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E63946" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        </sc-if>
+        <span>{{ t.text }}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;currentUser&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;Eric Rousseau&quot;, &quot;Maria Kovacs&quot;, &quot;Jana Lindqvist&quot;, &quot;Tom Berger&quot;, &quot;Sofie De Vries&quot;], &quot;default&quot;: &quot;Eric Rousseau&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Simulation&quot; },
+  &quot;showAiSuggestions&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Simulation&quot; }
+}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const SEV = this.SEV = {
+      Critical: { dot: '#E63946', bg: '#FDECEC' },
+      High: { dot: '#F4A261', bg: '#FEF3E2' },
+      Medium: { dot: '#3A86FF', bg: '#EBF3FF' }
+    };
+    this.users = [
+      { name: 'Eric Rousseau', role: 'QC Ops Lead' },
+      { name: 'Maria Kovacs', role: 'External Manufacturing Manager' },
+      { name: 'Jana Lindqvist', role: 'SC Planner' },
+      { name: 'Tom Berger', role: 'Procurement Lead' },
+      { name: 'Sofie De Vries', role: 'Demand Planner' }
+    ];
+    this.TRACE = {
+      'QC hold': ['QC hold + release window risk', 'Binocs QC hold AND release window risk > 0 days', 'QC Ops Lead \u2014 Eric Rousseau'],
+      'Capacity gap': ['CMO capacity shortfall', 'Helion gap > 1,000 units within 8 weeks of launch', 'External Mfg Manager \u2014 Maria Kovacs'],
+      'Inventory drift': ['Safety stock breach', 'Axon stock < 50% of policy days', 'SC Planner \u2014 Jana Lindqvist'],
+      'Lead time drift': ['Lead time drift', 'SAP PO drift > 3 days vs contracted lead time', 'Procurement Lead \u2014 Tom Berger'],
+      'Forecast': ['Forecast accuracy drop', 'Anaplan accuracy < target \u2212 10pts', 'Demand Planner \u2014 Sofie De Vries'],
+      'Cold chain': ['Cold chain excursion', 'SAP shipment temperature out of range > 30 min', 'Procurement Lead \u2014 Tom Berger'],
+      'QC capacity': ['Lab utilisation ceiling', 'Binocs utilisation > 95% within 2 weeks', 'QC Ops Lead \u2014 Eric Rousseau']
+    };
+    this.incomingPool = [
+      {
+        id: 'exp1', severity: 'High', status: 'Awaiting action', type: 'Cold chain', company: 'Catalent',
+        source: 'SAP', pushTo: 'SAP', owner: 'Tom Berger', age: 'Opened just now', partner: 'Catalent',
+        title: 'Temperature excursion on shipment SHP-2291 in transit to US DC',
+        impact: [
+          ['Detected by', 'SAP shipment telemetry', false],
+          ['Business impact', '\u20AC260K product value exposed', true],
+          ['Excursion', '+4.2\u00B0C above range for 47 min', true],
+          ['Current owner', 'Tom Berger (Procurement)', false]
+        ],
+        ai: 'Quarantine shipment SHP-2291 on arrival and request stability assessment from QA; excursion duration is within the 60-min stability budget for this product.',
+        aiConf: '82%', primaryLabel: 'Approve quarantine', approved: false,
+        timeline: [{ kind: 'open', who: 'SAP', when: 'Just now', body: 'Temperature excursion detected on shipment SHP-2291: +4.2\u00B0C above range for 47 min.' }]
+      },
+      {
+        id: 'exp2', severity: 'Medium', status: 'Awaiting action', type: 'QC capacity', company: 'Site 1',
+        source: 'Binocs', pushTo: 'Binocs', owner: 'Eric Rousseau', age: 'Opened just now', partner: null,
+        title: 'Binocs analyst utilisation over 95% at Site 1 lab \u2014 Wk 25',
+        impact: [
+          ['Detected by', 'Binocs utilisation model', false],
+          ['Business impact', 'Release delays likely Wk 25', true],
+          ['Utilisation', '97% vs 85% target', false],
+          ['Current owner', 'Eric Rousseau (QC Ops)', false]
+        ],
+        ai: 'Shift 2 non-urgent stability tests from Wk 25 to Wk 26 and enable overtime slot Thu PM \u2014 brings utilisation to 88%.',
+        aiConf: '76%', primaryLabel: 'Approve re-plan', approved: false,
+        timeline: [{ kind: 'open', who: 'Binocs', when: 'Just now', body: 'Analyst utilisation projected at 97% for Wk 25 at Site 1 lab.' }]
+      }
+    ];
+    this.state = {
+      screen: 'queue',
+      filter: 'all',
+      statusFilter: null,
+      partnerFilter: null,
+      selectedId: 'ex1',
+      confirmStep: false,
+      noteOpen: false,
+      noteText: '',
+      modalOpen: false,
+      discardAsk: false,
+      form: { title: '', severity: '', source: 'Manual', owner: '', ownerPicked: false, due: '', notes: '' },
+      errors: {},
+      escalateOpen: false,
+      esc: { to: '', deadline: '', note: '' },
+      escErrors: {},
+      actionConfirmId: null,
+      syncing: false,
+      lastSync: 'Last synced 2 min ago from Axon · SAP · Anaplan',
+      pdfBusy: false,
+      persona: null,
+      roleMenuOpen: false,
+      inviteOpen: false,
+      invite: { name: '', email: '', role: 'Planner', team: 'SC Planning' },
+      invErrors: {},
+      ruleModalOpen: false,
+      ruleForm: { id: null, name: '', cond: '', sev: 'High', route: 'SC Planner' },
+      ruleErrors: {},
+      signText: '',
+      settings: { slaC: 4, slaH: 8, slaM: 24, currency: 'EUR', retention: '7 years', aiOn: true, autoEsc: true, portal: false, teamsOn: true },
+      usersList: [
+        { id: 'u1', name: 'Eric Rousseau', role: 'Admin', team: 'QC Ops', status: 'Active', last: 'Now' },
+        { id: 'u2', name: 'Maria Kovacs', role: 'Manager', team: 'External Mfg', status: 'Active', last: '2h ago' },
+        { id: 'u3', name: 'Jana Lindqvist', role: 'Planner', team: 'SC Planning', status: 'Active', last: '10 min ago' },
+        { id: 'u4', name: 'Tom Berger', role: 'Manager', team: 'Procurement', status: 'Active', last: '1h ago' },
+        { id: 'u5', name: 'Sofie De Vries', role: 'Planner', team: 'Demand Planning', status: 'Active', last: 'Yesterday' },
+        { id: 'u6', name: 'A. Janssens', role: 'Director', team: 'Supply Chain', status: 'Active', last: 'Yesterday' },
+        { id: 'u7', name: 'Nina Vos', role: 'Admin', team: 'IT / Operations', status: 'Active', last: '3d ago' },
+        { id: 'u8', name: 'Lonza portal', role: 'Partner', team: 'External', status: 'Invited', last: '\u2014' }
+      ],
+      notifOpen: false,
+      chatOpen: false,
+      chatInput: '',
+      chatMsgs: [{ role: 'ai', text: 'Hi — I can answer questions about your exception queue, partners and value at risk, grounded in live NEXUS data. Try a quick prompt below.' }],
+      scorecardFor: null,
+      search: '',
+      syncIdx: 0,
+      notifToggles: { created: true, escalated: true, overdue: true, partner: false },
+      channels: { teams: true, slack: false, email: true },
+      notifications: [
+        { id: 1, kind: 'overdue', text: 'Action overdue: Approve Binocs re-slot for Batch X-4421', time: 'Today 09:00', unread: true },
+        { id: 2, kind: 'escalated', text: 'Auto-escalation armed: Lonza capacity shortfall escalates to SC Director at 17:00', time: 'Today 08:16', unread: true },
+        { id: 3, kind: 'created', text: 'New exception from Axon: SKU-089 safety stock breach at DE warehouse', time: 'Today 01:30', unread: true },
+        { id: 4, kind: 'partner', text: 'DSV responded: proposed dock slots Thu 07:00 / Fri 13:00', time: 'Tue 15:40', unread: false }
+      ],
+      rules: [
+        { id: 'r1', on: true, name: 'QC hold + release window risk', cond: 'Binocs QC hold AND release window risk > 0 days', sev: 'Critical', route: 'QC Ops Lead' },
+        { id: 'r2', on: true, name: 'CMO capacity shortfall', cond: 'Helion gap > 1,000 units within 8 weeks of launch', sev: 'Critical', route: 'External Mfg Manager' },
+        { id: 'r3', on: true, name: 'Safety stock breach', cond: 'Axon stock < 50% of policy days', sev: 'High', route: 'SC Planner' },
+        { id: 'r4', on: true, name: 'Lead time drift', cond: 'SAP PO drift > 3 days vs contracted lead time', sev: 'High', route: 'Procurement Lead' },
+        { id: 'r5', on: true, name: 'Cold chain excursion', cond: 'SAP shipment temperature out of range > 30 min', sev: 'High', route: 'Procurement Lead' },
+        { id: 'r6', on: false, name: 'Forecast accuracy drop', cond: 'Anaplan accuracy < target \u2212 10pts', sev: 'Medium', route: 'Demand Planner' }
+      ],
+      integrations: [
+        { id: 'axon', name: 'Axon\u2122', vendor: 'Bluecrux', dir: 'Read + write \u00B7 API', connected: true, last: 'Last sync 2 min ago', desc: 'Inventory drift and KPI alerts in; approved parameter updates pushed back.' },
+        { id: 'binocs', name: 'Binocs\u2122', vendor: 'Bluecrux', dir: 'Read + write \u00B7 API', connected: true, last: 'Last sync 2 min ago', desc: 'QC scheduling conflicts and hold alerts in; re-slot approvals pushed back.' },
+        { id: 'helion', name: 'Helion\u2122', vendor: 'Bluecrux', dir: 'Read \u00B7 API', connected: true, last: 'Last sync 14 min ago', desc: 'CMO capacity gaps and supply risk alerts in.' },
+        { id: 'sap', name: 'SAP S/4HANA', vendor: 'SAP', dir: 'Read + write \u00B7 OData', connected: true, last: 'Last sync 2 min ago', desc: 'Inventory deviations and lead-time drift in; expedites and PO changes pushed back.' },
+        { id: 'anaplan', name: 'Anaplan', vendor: 'Anaplan', dir: 'Read \u00B7 API', connected: true, last: 'Last sync 1h ago', desc: 'Forecast accuracy drops and planning exceptions in. Read-only in MVP.' },
+        { id: 'teams', name: 'Microsoft Teams', vendor: 'Microsoft', dir: 'Write \u00B7 Webhook', connected: true, last: 'Active', desc: 'Notifications on create, escalate and overdue. Acknowledge directly from Teams.' },
+        { id: 'entra', name: 'Microsoft Entra ID', vendor: 'Microsoft', dir: 'SSO \u00B7 SAML/OIDC', connected: true, last: 'Active', desc: 'Single sign-on and role-based access: planner / manager / director / partner.' },
+        { id: 'slack', name: 'Slack', vendor: 'Salesforce', dir: 'Write \u00B7 Webhook', connected: false, last: 'Not connected', desc: 'Post exceptions and escalations to Slack channels with acknowledge buttons.' },
+        { id: 'outlook', name: 'Email / Outlook', vendor: 'Microsoft', dir: 'Read + write \u00B7 Graph API', connected: true, last: 'Active', desc: 'Structured exception emails to stakeholders; replies parsed back into the timeline.' },
+        { id: 'omp', name: 'OMP / Kinaxis', vendor: '\u2014', dir: 'Read \u00B7 API', connected: false, last: 'Phase 2', desc: 'Planning exceptions from alternative APS platforms.' },
+        { id: 'portal', name: 'Partner portal', vendor: 'NEXUS', dir: 'Read + write', connected: false, last: 'Phase 2', desc: 'CMO/supplier-facing view and structured response form \u2014 no Helion access needed.' }
+      ],
+      syncLog: [
+        { time: 'Today 09:41', sys: 'Axon', msg: '2 KPI alerts evaluated \u00B7 0 new exceptions \u00B7 1 status update' },
+        { time: 'Today 09:41', sys: 'SAP', msg: 'PO status refresh \u00B7 lead-time drift check passed' },
+        { time: 'Today 08:16', sys: 'Helion', msg: 'Capacity model delta \u00B7 1 Critical exception created (Lonza Wk 26\u201328)' },
+        { time: 'Today 07:06', sys: 'Binocs', msg: 'Analyst availability synced for Site 3 \u00B7 attached to Batch X-4421' },
+        { time: 'Today 06:12', sys: 'Axon', msg: 'QC hold detected \u00B7 1 Critical exception created (Batch X-4421)' }
+      ],
+      toasts: [],
+      exceptions: [
+        {
+          id: 'ex1', severity: 'Critical', status: 'Awaiting action', type: 'QC hold', company: 'AstraZeneca',
+          source: 'Axon', pushTo: 'Binocs', owner: 'Eric Rousseau', age: 'Opened 3h ago', partner: null,
+          title: 'Batch X-4421 QC hold at Site 3 — EU release window at risk',
+          impact: [
+            ['Detected by', 'Axon (QC signal via Binocs)', false],
+            ['Business impact', '\u20AC1.2M revenue at risk', true],
+            ['Affected volume', '1 batch \u00B7 48,000 units', false],
+            ['Risk date', 'Nov 13 — EU release window', false],
+            ['Current owner', 'Eric Rousseau (QC Ops)', false],
+            ['Escalation path', 'QC Ops \u2192 Site Director \u2192 SC Director', false]
+          ],
+          ai: 'Re-slot batch X-4421 to Thu AM with analyst M\u00FCller — projected release Nov 13, within window. Binocs shows 6h of unused analyst capacity Thu morning.',
+          aiConf: '87%', primaryLabel: 'Approve re-slot', approved: false,
+          timeline: [
+            { kind: 'open', who: 'Axon', when: 'Today 06:12', body: 'QC hold detected on Batch X-4421 at Site 3. EU release window at risk by 3 days.' },
+            { kind: 'action', who: 'Eric Rousseau', when: 'Today 07:05', body: 'Acknowledged the exception and requested analyst availability from Binocs.' },
+            { kind: 'note', who: 'Binocs', when: 'Today 07:06', body: 'Analyst availability synced: M\u00FCller free Thu 08:00\u201312:00, Peeters free Fri PM.' }
+          ]
+        },
+        {
+          id: 'ex2', severity: 'Critical', status: 'Awaiting action', type: 'Capacity gap', company: 'Lonza',
+          source: 'Helion', pushTo: 'Helion', owner: 'Maria Kovacs', age: 'Opened 6h ago', partner: 'Lonza',
+          title: '3,200-unit capacity shortfall at Lonza — Wk 26\u201328, Q3 launch at risk',
+          impact: [
+            ['Detected by', 'Helion capacity model', false],
+            ['Business impact', '\u20AC2.1M launch revenue at risk', true],
+            ['Affected volume', '3,200 units \u00B7 Wk 26\u201328', false],
+            ['Risk date', 'Q3 launch — 6 weeks out', false],
+            ['Inventory buffer', '8 days', true],
+            ['Current owner', 'Maria Kovacs (External Mfg)', false],
+            ['Escalation path', 'External Mfg \u2192 SC Director', false]
+          ],
+          ai: 'Send structured capacity request to Lonza for 3,200 units; pre-book Samsung Biologics as backup for the uncovered volume. Auto-escalate at 17:00 if no response.',
+          aiConf: '78%', primaryLabel: 'Approve capacity request', approved: false,
+          timeline: [
+            { kind: 'open', who: 'Helion', when: 'Today 03:40', body: 'Capacity shortfall of 3,200 units detected at Lonza for Wk 26\u201328.' },
+            { kind: 'action', who: 'Maria Kovacs', when: 'Today 08:15', body: 'Reviewed shortfall and inventory buffer. Preparing partner capacity request.' },
+            { kind: 'note', who: 'System', when: 'Today 08:16', body: 'Partner status: request not yet sent. Lonza avg response time 6.5h.' }
+          ]
+        },
+        {
+          id: 'ex3', severity: 'High', status: 'Awaiting action', type: 'Inventory drift', company: 'Maesa',
+          source: 'Axon', pushTo: 'SAP', owner: 'Jana Lindqvist', age: 'Opened 9h ago', partner: null,
+          title: 'SKU-089 safety stock at DE warehouse below policy — stockout in 5 days',
+          impact: [
+            ['Detected by', 'Axon inventory command center', false],
+            ['Business impact', '\u20AC340K service risk', true],
+            ['Current stock', '4.2 days (policy: 14 days)', true],
+            ['Replenishment ETA', '+9 days standard route', false],
+            ['Stockout date', 'In 5 days', true],
+            ['Current owner', 'Jana Lindqvist (SC Planning)', false]
+          ],
+          ai: 'Expedite replenishment via air freight — cost \u20AC4,200, prevents stockout. Push purchase order change to SAP on approval.',
+          aiConf: '91%', primaryLabel: 'Approve expedite', approved: false,
+          timeline: [
+            { kind: 'open', who: 'Axon', when: 'Today 01:30', body: 'SKU-089 safety stock dropped to 4.2 days at DE warehouse. Policy: 14 days.' },
+            { kind: 'action', who: 'Jana Lindqvist', when: 'Today 08:50', body: 'Compared standard replenishment ETA (+9 days) against stockout date. Standard route too slow.' }
+          ]
+        },
+        {
+          id: 'ex4', severity: 'High', status: 'Partner response pending', type: 'Lead time drift', company: 'Evonik',
+          source: 'SAP', pushTo: 'SAP', owner: 'Tom Berger', age: 'Opened 1d ago', partner: 'Evonik',
+          impact: [
+            ['Detected by', 'SAP S/4HANA', false],
+            ['Business impact', '\u20AC180K expedite exposure', true],
+            ['Affected order', 'PO 4500128843 \u00B7 12t excipient', false],
+            ['Drift', '+6 days vs contracted lead time', false],
+            ['Current owner', 'Tom Berger (Procurement)', false]
+          ],
+          title: 'PO 4500128843 lead time drift +6 days from supplier Evonik',
+          ai: 'Request confirmed ship date from Evonik; if beyond Jun 24, split the order and source 4t from the approved alternate supplier.',
+          aiConf: '72%', primaryLabel: 'Approve supplier request', approved: false,
+          timeline: [
+            { kind: 'open', who: 'SAP', when: 'Yesterday 14:20', body: 'Lead time drift of +6 days detected on PO 4500128843.' },
+            { kind: 'action', who: 'Tom Berger', when: 'Yesterday 16:02', body: 'Sent lead-time confirmation request to Evonik through the partner channel.' },
+            { kind: 'note', who: 'System', when: 'Today 08:00', body: 'No partner response yet. Auto-escalation scheduled for 17:00 today.' }
+          ]
+        },
+        {
+          id: 'ex5', severity: 'Medium', status: 'In review', type: 'Forecast', company: 'EMEA region',
+          source: 'Anaplan', pushTo: 'Anaplan', owner: 'Sofie De Vries', age: 'Opened 2d ago', partner: null,
+          title: 'Forecast accuracy drop of 12pts on C-Line SKU family, EMEA',
+          impact: [
+            ['Detected by', 'Anaplan forecast module', false],
+            ['Business impact', 'Overstock risk \u20AC95K', true],
+            ['Accuracy', '68% (target: 80%)', false],
+            ['Scope', 'C-Line family \u00B7 14 SKUs \u00B7 EMEA', false],
+            ['Current owner', 'Sofie De Vries (Demand Planning)', false]
+          ],
+          ai: 'Rebaseline the C-Line statistical forecast using the last 8 weeks of POS data; exclude the April promotion uplift from the history.',
+          aiConf: '69%', primaryLabel: 'Approve rebaseline', approved: false,
+          timeline: [
+            { kind: 'open', who: 'Anaplan', when: 'Mon 09:00', body: 'Forecast accuracy on C-Line family dropped 12pts below target.' },
+            { kind: 'note', who: 'Sofie De Vries', when: 'Mon 11:30', body: 'April promotion uplift appears to be distorting the statistical baseline. Investigating.' }
+          ]
+        },
+        {
+          id: 'ex6', severity: 'Medium', status: 'Awaiting action', type: 'Logistics', company: 'DSV',
+          source: 'Manual', pushTo: 'SAP', owner: 'Eric Rousseau', age: 'Opened 2d ago', partner: 'DSV',
+          title: 'DSV inbound receipt delay at NL DC — 2 shipments pending dock slot',
+          impact: [
+            ['Detected by', 'Raised manually — J. Lindqvist', false],
+            ['Business impact', '\u20AC45K holding exposure', true],
+            ['Affected volume', '2 shipments \u00B7 36 pallets', false],
+            ['Current owner', 'Eric Rousseau (QC Ops)', false]
+          ],
+          ai: 'Confirm Thursday 07:00 dock slot with DSV; both pending shipments fit a single slot window.',
+          aiConf: '84%', primaryLabel: 'Approve dock slot', approved: false,
+          timeline: [
+            { kind: 'open', who: 'Jana Lindqvist', when: 'Tue 10:14', body: 'Exception raised manually: 2 inbound DSV shipments waiting on a dock slot at NL DC.' },
+            { kind: 'note', who: 'DSV', when: 'Tue 15:40', body: 'Partner acknowledged. Proposed dock slots: Thu 07:00 or Fri 13:00.' }
+          ]
+        }
+      ],
+      actions: [
+        { id: 'a1', bucket: 'Overdue', title: 'Approve Binocs re-slot for Batch X-4421', context: 'Due: Today 09:00 \u00B7 Axon \u00B7 Critical', btn: 'Approve', exId: 'ex1', done: false },
+        { id: 'a2', bucket: 'Due today', title: 'Review DSV inbound delay — confirm dock slot', context: 'Due: Today 16:00 \u00B7 Manual \u00B7 Medium', btn: 'Review', exId: 'ex6', done: false },
+        { id: 'a3', bucket: 'Tomorrow', title: 'Confirm QC analyst allocation for Wk 24', context: 'Due: Tomorrow 10:00 \u00B7 Binocs \u00B7 High', btn: 'Start', exId: 'ex1', done: false },
+        { id: 'a4', bucket: 'This week', title: 'Update escalation path for Site 3 QC exceptions', context: 'Due: Friday \u00B7 NEXUS \u00B7 Medium', btn: 'Review', exId: 'ex1', done: false }
+      ],
+      partners: [
+        { name: 'Lonza', type: 'CMO', open: '1 Critical \u00B7 1 High', openSev: 'Critical', resp: '6.5h', status: 'Needs action' },
+        { name: 'Samsung Biologics', type: 'CMO', open: '1 Medium', openSev: 'Medium', resp: '3.2h', status: 'On track' },
+        { name: 'Evonik', type: 'Supplier', open: '1 High \u00B7 1 Medium', openSev: 'High', resp: '5.1h', status: 'Monitoring' },
+        { name: 'DSV', type: '3PL', open: '1 Medium', openSev: 'Medium', resp: '2.8h', status: 'On track' },
+        { name: 'Catalent', type: 'CMO', open: '\u2014', openSev: null, resp: '3.9h', status: 'On track' }
+      ]
+    };
+  }
+
+  toast(text, ok = true) {
+    const id = Date.now() + Math.random();
+    this.setState(s => ({ toasts: [...s.toasts, { id, text, ok, err: !ok }] }));
+    setTimeout(() => this.setState(s => ({ toasts: s.toasts.filter(t => t.id !== id) })), 3000);
+  }
+
+  notify(text, kind) {
+    this.setState(s => ({ notifications: [{ id: Date.now(), kind, text, time: 'Just now', unread: true }, ...s.notifications] }));
+  }
+
+  sendChat(q) {
+    const text = (q || '').trim();
+    if (!text) return;
+    const s = this.state;
+    const open = s.exceptions.filter(e => !e.approved);
+    const crit = open.filter(e => e.severity === 'Critical').length;
+    const high = open.filter(e => e.severity === 'High').length;
+    const med = open.filter(e => e.severity === 'Medium').length;
+    const low = text.toLowerCase();
+    let reply;
+    if (low.includes('risk')) {
+      reply = 'Your biggest risk is the Lonza capacity shortfall (Critical, \u20AC2.1M, Q3 launch 6 weeks out \u2014 partner has not responded yet). Second: Batch X-4421 QC hold (Critical, \u20AC1.2M, release window Nov 13). Total value at risk across ' + open.length + ' open exceptions: \u20AC4.8M.';
+    } else if (low.includes('summar') || low.includes('queue')) {
+      reply = 'Queue summary: ' + open.length + ' open exceptions \u2014 ' + crit + ' Critical, ' + high + ' High, ' + med + ' Medium. ' + s.exceptions.filter(e => e.status === 'Awaiting action').length + ' are awaiting action. Oldest untouched item: forecast accuracy drop on C-Line (2 days). Avg time to act this week: 4.6h, improving.';
+    } else if (low.includes('partner') || low.includes('slow')) {
+      reply = 'Lonza is your slowest partner: 6.5h avg response and the only one flagged "Needs action" (1 Critical + 1 High open). Evonik is on watch at 5.1h. DSV (2.8h) and Samsung Biologics (3.2h) are on track.';
+    } else if (low.includes('value') || low.includes('\u20AC') || low.includes('money')) {
+      reply = 'Total value at risk is \u20AC4.8M, up \u20AC0.6M vs last week. Largest contributor: Lonza capacity shortfall (\u20AC2.1M). \u20AC3.4M was protected by exceptions resolved this month.';
+    } else if (low.includes('overdue') || low.includes('action')) {
+      reply = 'You have 1 overdue action: "Approve Binocs re-slot for Batch X-4421" (was due 09:00). One more is due today at 16:00. Approving the re-slot now keeps the EU release inside its window.';
+    } else {
+      reply = 'I can answer questions about your open exceptions (' + open.length + ' currently), partners, value at risk, and overdue actions \u2014 all grounded in live NEXUS data. Try: "What\u2019s my biggest risk?" or "Summarise the queue".';
+    }
+    this.setState(st => ({ chatMsgs: [...st.chatMsgs, { role: 'user', text }], chatInput: '' }));
+    setTimeout(() => this.setState(st => ({ chatMsgs: [...st.chatMsgs, { role: 'ai', text: reply }] })), 500);
+  }
+
+  addTimeline(exId, kind, who, body) {
+    this.setState(s => ({
+      exceptions: s.exceptions.map(e => e.id === exId
+        ? { ...e, timeline: [...e.timeline, { kind, who, when: 'Just now', body }] }
+        : e)
+    }));
+  }
+
+  currentUser() { return this.state.persona ?? this.props.currentUser ?? 'Eric Rousseau'; }
+
+  currentUserRec() {
+    const me = this.currentUser();
+    return this.state.usersList.find(u => u.name === me) || this.state.usersList[0];
+  }
+
+  filteredExceptions() {
+    const s = this.state;
+    const me = this.currentUser();
+    return s.exceptions.filter(e => {
+      if (s.partnerFilter && e.partner !== s.partnerFilter) return false;
+      if (s.search && !(e.title + ' ' + e.company + ' ' + e.type + ' ' + e.source + ' ' + e.owner).toLowerCase().includes(s.search.toLowerCase())) return false;
+      if (s.statusFilter === 'awaiting' && e.status !== 'Awaiting action') return false;
+      if (s.filter === 'critical' && e.severity !== 'Critical') return false;
+      if (s.filter === 'mine' && e.owner !== me) return false;
+      if (s.filter === 'partner' && !e.partner) return false;
+      return true;
+    });
+  }
+
+  approve(ex) {
+    this.setState(s => ({
+      confirmStep: false,
+      exceptions: s.exceptions.map(e => e.id === ex.id ? { ...e, approved: true, status: 'Action taken — monitoring' } : e)
+    }));
+    this.addTimeline(ex.id, 'action', this.currentUser(), 'Approved: ' + ex.primaryLabel.replace('Approve ', '') + '. Electronically signed by ' + this.currentUser() + '. Decision pushed to ' + ex.pushTo + '.');
+    this.toast('Action approved — ' + ex.pushTo + ' updated');
+  }
+
+  renderVals() {
+    const s = this.state;
+    const SEV = this.SEV;
+    const me = this.currentUser();
+    const initials = n => n.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    const meRec = this.currentUserRec();
+    const meUser = { name: meRec.name, role: meRec.role + ' \u00B7 ' + meRec.team };
+    const isAdminUser = meRec.role === 'Admin';
+
+    // ---- shared style bits ----
+    const btnActive = { transform: 'scale(0.98)' };
+    const outlineBtnHover = { background: '#F8F9FA' };
+    const primaryBtnHover = { background: '#0099BB' };
+    const inputFocus = { borderColor: '#00B4D8' };
+    const navBase = {
+      height: '40px', padding: '0 16px', display: 'flex', alignItems: 'center', gap: '10px',
+      color: 'rgba(255,255,255,0.7)', fontSize: '13px', cursor: 'pointer',
+      borderLeft: '2px solid transparent', userSelect: 'none'
+    };
+    const navActive = {
+      ...navBase, background: 'rgba(0,180,216,0.12)', color: '#00B4D8', borderLeft: '2px solid #00B4D8'
+    };
+    const navStyle = key => s.screen === key ? navActive : navBase;
+    const navHover = s.screen ? { background: 'rgba(255,255,255,0.06)', color: '#FFFFFF' } : {};
+
+    const badge = (bg, fg) => ({
+      fontSize: '11px', fontWeight: 500, color: fg, background: bg,
+      borderRadius: '4px', padding: '3px 8px', whiteSpace: 'nowrap'
+    });
+
+    // ---- counts ----
+    const criticalCount = s.exceptions.filter(e => e.severity === 'Critical' && !e.approved).length;
+    const pendingCount = s.actions.filter(a => !a.done).length;
+
+    // ---- screen meta ----
+    const titles = {
+      queue: ['Exception queue', s.syncing ? 'Syncing\u2026' : s.lastSync],
+      actions: ['My actions', pendingCount + ' actions need your attention'],
+      exec: ['Executive view', 'Aggregated across Axon \u00B7 Helion \u00B7 Anaplan \u00B7 SAP'],
+      partners: ['Partner network', '5 partners \u00B7 CMO, supplier and 3PL'],
+      integrations: ['Integrations', 'Connected systems \u00B7 data in, decisions out'],
+      rules: ['Alert rules', 'Conditions that auto-create and route exceptions'],
+      teams: ['Teams', 'Teams, roles and escalation paths'],
+      audit: ['Audit log', 'Append-only \u00B7 immutable \u00B7 export for compliance'],
+      users: ['Users & permissions', s.usersList.length + ' users \u00B7 SSO via Microsoft Entra ID'],
+      settings: ['Workspace settings', 'SLAs, feature options and organisation']
+    };
+
+    // ---- stat cards ----
+    const statBase = {
+      background: '#F1F3F5', border: '0.5px solid #CED4DA', borderRadius: '12px',
+      height: '80px', padding: '12px 14px', cursor: 'pointer', display: 'flex',
+      flexDirection: 'column', justifyContent: 'center', gap: '2px'
+    };
+    const statCards = [
+      { label: 'Critical open', value: String(criticalCount), valueStyle: { fontSize: '22px', fontWeight: 500, color: '#E63946', lineHeight: 1.2 }, delta: '\u2191 1 vs last week', deltaStyle: { fontSize: '11px', color: '#E63946' }, onClick: () => this.setState({ filter: 'critical', statusFilter: null }) },
+      { label: 'Awaiting action', value: String(s.exceptions.filter(e => e.status === 'Awaiting action').length), valueStyle: { fontSize: '22px', fontWeight: 500, color: '#F4A261', lineHeight: 1.2 }, delta: '\u2193 2 vs last week', deltaStyle: { fontSize: '11px', color: '#2DC653' }, onClick: () => this.setState({ statusFilter: 'awaiting' }) },
+      { label: 'Resolved this week', value: '12', valueStyle: { fontSize: '22px', fontWeight: 500, color: '#2DC653', lineHeight: 1.2 }, delta: 'Avg resolution 5.4h', deltaStyle: { fontSize: '11px', color: '#6C757D' }, onClick: () => this.toast('Resolved exceptions view — Phase 2') },
+      { label: 'Avg time to act', value: '4.6h', valueStyle: { fontSize: '22px', fontWeight: 500, color: '#00B4D8', lineHeight: 1.2 }, delta: '\u2193 0.8h vs last week', deltaStyle: { fontSize: '11px', color: '#2DC653' }, onClick: () => {} }
+    ].map(c => ({ ...c, style: statBase, hoverStyle: { background: '#E9ECEF' } }));
+
+    // ---- filter pills ----
+    const allCount = this.filteredExceptions().length;
+    const pillDefs = [['all', 'All (' + allCount + ')'], ['critical', 'Critical'], ['mine', 'Mine'], ['partner', 'Partner']];
+    const filterPills = pillDefs.map(([key, label]) => ({
+      label,
+      onClick: () => this.setState({ filter: key, statusFilter: null }),
+      style: s.filter === key
+        ? { fontFamily: 'Inter,system-ui,sans-serif', fontSize: '11px', fontWeight: 500, padding: '4px 12px', borderRadius: '20px', border: '0.5px solid #0D1B2A', background: '#0D1B2A', color: '#FFFFFF', cursor: 'pointer' }
+        : { fontFamily: 'Inter,system-ui,sans-serif', fontSize: '11px', fontWeight: 500, padding: '4px 12px', borderRadius: '20px', border: '0.5px solid #CED4DA', background: 'transparent', color: '#6C757D', cursor: 'pointer' }
+    }));
+
+    // ---- exception cards ----
+    const filtered = this.filteredExceptions();
+    const exceptionCards = filtered.map(e => {
+      const selected = e.id === s.selectedId;
+      return {
+        title: e.title, age: e.age, ownerName: e.owner, ownerInitials: initials(e.owner),
+        tags: [e.type, e.company, e.source],
+        isNew: !!e.isNew,
+        sla: e.approved ? '\u00B7 SLA met \u2713' : (e.severity === 'Critical' ? '\u00B7 ' + s.settings.slaC + 'h SLA \u00B7 55m left' : (e.severity === 'High' ? '\u00B7 ' + s.settings.slaH + 'h SLA \u00B7 3h left' : '\u00B7 ' + s.settings.slaM + 'h SLA \u00B7 on track')),
+        slaStyle: { fontSize: '11px', fontWeight: 500, marginLeft: '5px', color: e.approved ? '#2DC653' : SEV[e.severity].dot },
+        dotStyle: { width: '8px', height: '8px', minWidth: '8px', borderRadius: '50%', background: SEV[e.severity].dot, marginTop: '5px' },
+        cardStyle: selected
+          ? { padding: '12px 14px 12px 12px', borderBottom: '0.5px solid #CED4DA', borderLeft: '2px solid #00B4D8', background: 'rgba(0,180,216,0.07)', cursor: 'pointer' }
+          : { padding: '12px 14px', borderBottom: '0.5px solid #CED4DA', background: '#FFFFFF', cursor: 'pointer' },
+        hoverStyle: selected ? {} : { background: '#F8F9FA' },
+        select: () => this.setState({ selectedId: e.id, confirmStep: false, noteOpen: false })
+      };
+    });
+
+    // ---- detail panel ----
+    const selEx = s.exceptions.find(e => e.id === s.selectedId);
+    const hasSel = !!selEx && filtered.some(e => e.id === s.selectedId);
+    let sel = {};
+    if (selEx) {
+      const sevC = SEV[selEx.severity];
+      const badges = [
+        { text: selEx.severity, style: badge(sevC.bg, sevC.dot) },
+        { text: selEx.status, style: selEx.status.indexOf('taken') >= 0 ? badge('#E9F7EF', '#2DC653') : (selEx.status === 'Escalated' ? badge('#FDECEC', '#E63946') : badge('#FEF3E2', '#F4A261')) },
+        { text: selEx.type + ' \u00B7 ' + selEx.company, style: badge('#EBF3FF', '#3A86FF') }
+      ];
+      const dotStyles = {
+        open: { width: '14px', height: '14px', borderRadius: '50%', background: '#FDECEC', border: '1.5px solid #E63946', boxSizing: 'border-box' },
+        action: { width: '14px', height: '14px', borderRadius: '50%', background: '#EBF3FF', border: '1.5px solid #3A86FF', boxSizing: 'border-box' },
+        note: { width: '14px', height: '14px', borderRadius: '50%', background: '#F1F3F5', border: '1.5px solid #CED4DA', boxSizing: 'border-box' }
+      };
+      sel = {
+        title: selEx.title,
+        source: selEx.source,
+        badges,
+        impactRows: selEx.impact.map(([label, value, risk]) => ({
+          label, value,
+          valueStyle: { fontSize: '13px', fontWeight: 500, color: risk ? '#E63946' : '#212529' }
+        })),
+        traceRule: (this.TRACE[selEx.type] || ['Manual entry'])[0],
+        traceCond: (this.TRACE[selEx.type] || [0, 'Raised by a user via the Raise exception form'])[1],
+        traceRoute: (this.TRACE[selEx.type] || [0, 0, 'Owner selected at creation \u2014 ' + selEx.owner])[2],
+        showAi: (this.props.showAiSuggestions ?? true) && s.settings.aiOn && !!selEx.ai,
+        aiBody: selEx.ai, aiConfidence: selEx.aiConf,
+        timeline: selEx.timeline.map((t, i) => ({
+          who: t.who, when: t.when, body: t.body,
+          dotStyle: dotStyles[t.kind] || dotStyles.note,
+          lineStyle: i < selEx.timeline.length - 1 ? { width: '0.5px', flex: 1, background: '#CED4DA' } : { display: 'none' }
+        })),
+        primaryLabel: selEx.primaryLabel,
+        showPrimary: !selEx.approved && !s.confirmStep,
+        showConfirm: !selEx.approved && s.confirmStep,
+        showApproved: selEx.approved
+      };
+    }
+
+    // ---- my actions ----
+    const order = { 'Overdue': 0, 'Due today': 1, 'Tomorrow': 2, 'This week': 3 };
+    const badgeMap = {
+      'Overdue': badge('#FDECEC', '#E63946'),
+      'Due today': badge('#FEF3E2', '#F4A261'),
+      'Tomorrow': badge('#EBF3FF', '#3A86FF'),
+      'This week': badge('#F1F3F5', '#495057')
+    };
+    const open = s.actions.filter(a => !a.done).sort((a, b) => order[a.bucket] - order[b.bucket]);
+    const actionCards = open.map(a => {
+      const primary = a.bucket === 'Overdue' || a.bucket === 'Due today';
+      const isApprove = a.btn === 'Approve';
+      const confirming = s.actionConfirmId === a.id;
+      return {
+        badgeText: a.bucket, badgeStyle: badgeMap[a.bucket],
+        title: a.title, context: a.context,
+        btnLabel: a.btn,
+        btnStyle: primary
+          ? { fontFamily: 'Inter,system-ui,sans-serif', fontSize: '11px', fontWeight: 500, color: '#0D1B2A', background: '#00B4D8', border: 'none', borderRadius: '8px', padding: '5px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }
+          : { fontFamily: 'Inter,system-ui,sans-serif', fontSize: '11px', fontWeight: 500, color: '#212529', background: 'transparent', border: '0.5px solid #CED4DA', borderRadius: '8px', padding: '5px 10px', cursor: 'pointer', whiteSpace: 'nowrap' },
+        showBtn: !confirming,
+        showConfirm: confirming,
+        onClick: () => {
+          if (isApprove) { this.setState({ actionConfirmId: a.id }); }
+          else {
+            this.setState({ screen: 'queue', selectedId: a.exId, filter: 'all', statusFilter: null, partnerFilter: null, confirmStep: false, noteOpen: false });
+            if (a.btn === 'Start') this.toast('Action marked as in progress');
+          }
+        },
+        onYes: () => {
+          const ex = this.state.exceptions.find(e => e.id === a.exId);
+          this.setState(st => ({ actionConfirmId: null, actions: st.actions.map(x => x.id === a.id ? { ...x, done: true } : x) }));
+          if (ex && !ex.approved) this.approve(ex);
+          else this.toast('Action approved');
+        },
+        onNo: () => this.setState({ actionConfirmId: null })
+      };
+    });
+    const completedCards = s.actions.filter(a => a.done).map(a => ({ title: a.title }));
+
+    // ---- exec view ----
+    const trendData = [[8, 12, 9], [7, 10, 12], [5, 9, 14], [4, 7, 16]];
+    const trendColors = ['#E63946', '#F4A261', '#2DC653'];
+    const trendGroups = trendData.map((week, i) => ({
+      label: 'W' + (i + 1),
+      bars: week.map((v, j) => ({ style: { width: '14px', height: Math.round(v / 16 * 80) + 'px', background: trendColors[j], borderRadius: '2px 2px 0 0' } }))
+    }));
+    const sourceData = [['Axon', 14, '#00B4D8'], ['Helion', 6, '#7B2FBE'], ['Anaplan', 4, '#F4A261'], ['Manual', 3, '#CED4DA']];
+    const sourceBars = sourceData.map(([label, v, c]) => ({
+      label, value: String(v),
+      fillStyle: { width: Math.round(v / 14 * 100) + '%', height: '6px', background: c, borderRadius: '3px' }
+    }));
+    const teamData = [['QC', 3.2], ['SC Planning', 4.8], ['External Mfg', 7.1], ['Procurement', 9.4]];
+    const teamColor = h => h < 4 ? '#2DC653' : (h <= 8 ? '#F4A261' : '#E63946');
+    const teamBars = teamData.map(([label, h]) => ({
+      label, value: h + 'h',
+      fillStyle: { width: Math.round(h / 9.4 * 100) + '%', height: '6px', background: teamColor(h), borderRadius: '3px' }
+    }));
+
+    // ---- partners ----
+    const respColor = t => { const h = parseFloat(t); return h < 4 ? '#2DC653' : (h <= 8 ? '#F4A261' : '#E63946'); };
+    const statusBadge = { 'On track': badge('#E9F7EF', '#2DC653'), 'Monitoring': badge('#FEF3E2', '#F4A261'), 'Needs action': badge('#FDECEC', '#E63946') };
+    const partnerRows = s.partners.map((p, i) => ({
+      name: p.name, type: p.type, open: p.open, resp: p.resp, status: p.status,
+      openStyle: { fontSize: '12px', fontWeight: 500, color: p.openSev ? SEV[p.openSev].dot : '#6C757D' },
+      respStyle: { fontSize: '12px', fontWeight: 500, color: respColor(p.resp) },
+      statusStyle: statusBadge[p.status],
+      rowStyle: { background: i % 2 === 0 ? '#F8F9FA' : '#FFFFFF', cursor: 'pointer', borderBottom: '0.5px solid #CED4DA' },
+      onClick: () => this.setState({ screen: 'queue', partnerFilter: p.name, filter: 'all', statusFilter: null }),
+      onName: e => { e.stopPropagation(); this.setState({ scorecardFor: p.name }); }
+    }));
+
+    // ---- modal ----
+    const f = s.form;
+    const dirty = !!(f.title || f.severity || f.owner || f.notes || f.due);
+    const matches = (!f.ownerPicked && f.owner.length >= 2)
+      ? this.users.filter(u => (u.name + ' ' + u.role).toLowerCase().includes(f.owner.toLowerCase()))
+      : [];
+    const setForm = k => e => this.setState(st => ({ form: { ...st.form, [k]: e.target.value, ownerPicked: k === 'owner' ? false : st.form.ownerPicked }, errors: { ...st.errors, [k]: false } }));
+
+    return {
+      // user / nav
+      userName: meUser.name, userRole: meUser.role, userInitials: initials(meUser.name),
+      navHover,
+      navQueueStyle: navStyle('queue'), navActionsStyle: navStyle('actions'), navExecStyle: navStyle('exec'),
+      navPartnersStyle: navStyle('partners'), navRulesStyle: navStyle('rules'), navTeamsStyle: navStyle('teams'),
+      goQueue: () => this.setState({ screen: 'queue' }),
+      goActions: () => this.setState({ screen: 'actions' }),
+      goExec: () => this.setState({ screen: 'exec' }),
+      goPartners: () => this.setState({ screen: 'partners' }),
+      goRules: () => this.setState({ screen: 'rules' }),
+      goTeams: () => this.setState({ screen: 'teams' }),
+      criticalCount: String(criticalCount),
+      pendingCount: String(pendingCount),
+      criticalBadgeStyle: criticalCount > 0 ? { fontSize: '10px', fontWeight: 500, borderRadius: '10px', padding: '2px 6px', background: '#E63946', color: '#FFFFFF' } : { display: 'none' },
+      pendingBadgeStyle: pendingCount > 0 ? { fontSize: '10px', fontWeight: 500, borderRadius: '10px', padding: '2px 6px', background: '#F4A261', color: '#FFFFFF' } : { display: 'none' },
+
+      // top bar
+      screenTitle: titles[s.screen][0], screenSub: titles[s.screen][1],
+      syncIconStyle: s.syncing ? { animation: 'spin 1s linear infinite' } : {},
+      doSync: () => {
+        if (s.syncing) return;
+        this.setState({ syncing: true });
+        setTimeout(() => {
+          const nx = this.incomingPool[this.state.syncIdx];
+          this.setState(st => ({
+            syncing: false,
+            lastSync: 'Last synced just now from Axon \u00B7 SAP \u00B7 Anaplan',
+            syncIdx: st.syncIdx + 1,
+            syncLog: [{ time: 'Just now', sys: nx ? nx.source : 'All', msg: nx ? '1 new exception created: ' + nx.title : 'All sources checked \u00B7 no new exceptions' }, ...st.syncLog],
+            exceptions: nx ? [{ ...nx, isNew: true }, ...st.exceptions] : st.exceptions
+          }));
+          if (nx) {
+            this.notify('New exception from ' + nx.source + ': ' + nx.title, 'created');
+            this.toast('Sync complete \u2014 1 new ' + nx.severity + ' exception from ' + nx.source);
+            setTimeout(() => this.setState(st => ({ exceptions: st.exceptions.map(e => e.id === nx.id ? { ...e, isNew: false } : e) })), 5000);
+          } else {
+            this.toast('Data synced from all sources');
+          }
+        }, 1500);
+      },
+      pdfLabel: s.pdfBusy ? 'Generating\u2026' : 'Export PDF',
+      pdfIconStyle: s.pdfBusy ? { animation: 'spin 1s linear infinite' } : {},
+      exportPdf: () => {
+        if (s.pdfBusy) return;
+        this.setState({ pdfBusy: true });
+        setTimeout(() => { this.setState({ pdfBusy: false }); this.toast('Opening print dialog \u2014 save as PDF'); setTimeout(() => window.print(), 400); }, 1200);
+      },
+
+      // screens
+      isQueue: s.screen === 'queue', isActions: s.screen === 'actions', isExec: s.screen === 'exec',
+      isPartners: s.screen === 'partners',
+      isRules: s.screen === 'rules', isTeams: s.screen === 'teams',
+      isIntegrations: s.screen === 'integrations', isAudit: s.screen === 'audit',
+      isPlaceholder: false, placeholderTitle: '',
+      navIntegrationsStyle: navStyle('integrations'), navAuditStyle: navStyle('audit'),
+      goIntegrations: () => this.setState({ screen: 'integrations' }),
+      goAudit: () => this.setState({ screen: 'audit' }),
+      isUsers: s.screen === 'users', isSettings: s.screen === 'settings',
+      navUsersStyle: navStyle('users'), navSettingsStyle: navStyle('settings'),
+      goUsers: () => this.setState({ screen: 'users' }),
+      goSettings: () => this.setState({ screen: 'settings' }),
+      isAdminUser,
+      roleMenuOpen: s.roleMenuOpen,
+      toggleRoleMenu: () => this.setState(st => ({ roleMenuOpen: !st.roleMenuOpen })),
+      userBlockHover: { background: 'rgba(255,255,255,0.06)' },
+      personaRows: s.usersList.filter(u => u.status === 'Active').map(u => ({
+        name: u.name, role: u.role + ' \u00B7 ' + u.team,
+        style: { padding: '7px 12px', cursor: 'pointer', background: u.name === me ? 'rgba(0,180,216,0.07)' : '#FFFFFF' },
+        pick: () => {
+          const wasAdminScreen = ['users', 'settings'].includes(this.state.screen);
+          this.setState({ persona: u.name, roleMenuOpen: false, screen: (u.role !== 'Admin' && wasAdminScreen) ? 'queue' : this.state.screen, filter: 'all' });
+          this.toast('Signed in as ' + u.name + ' (' + u.role + ')');
+        }
+      })),
+
+      // queue
+      statCards, filterPills, exceptionCards,
+      listEmpty: filtered.length === 0,
+      hasPartnerFilter: !!s.partnerFilter, partnerFilterName: s.partnerFilter || '',
+      clearPartnerFilter: () => this.setState({ partnerFilter: null }),
+      hasStatusFilter: !!s.statusFilter, statusFilterLabel: 'Awaiting action',
+      clearStatusFilter: () => this.setState({ statusFilter: null }),
+      hasSel, noSel: !hasSel, sel,
+      askConfirm: () => this.setState({ confirmStep: true, signText: '' }),
+      cancelConfirm: () => this.setState({ confirmStep: false, signText: '' }),
+      signText: s.signText,
+      onSignText: e => this.setState({ signText: e.target.value }),
+      signPlaceholder: 'E-sign: type "' + initials(me) + '"',
+      confirmApprove: () => {
+        if (s.signText.trim().toUpperCase() !== initials(me)) { this.toast('E-signature required \u2014 type your initials to sign', false); return; }
+        if (selEx) { this.approve(selEx); this.setState({ signText: '' }); }
+      },
+      openEscalate: () => this.setState({ escalateOpen: true, esc: { to: '', deadline: '', note: '' }, escErrors: {} }),
+      openNote: () => this.setState({ noteOpen: true }),
+      cancelNote: () => this.setState({ noteOpen: false, noteText: '' }),
+      noteOpen: s.noteOpen, noteText: s.noteText,
+      onNoteText: e => this.setState({ noteText: e.target.value }),
+      submitNote: () => {
+        if (!s.noteText.trim() || !selEx) return;
+        this.addTimeline(selEx.id, 'note', me, s.noteText.trim());
+        this.setState({ noteOpen: false, noteText: '' });
+      },
+      openSource: () => { if (selEx) this.toast('Opening record in ' + selEx.source + ' (new tab)'); },
+
+      // my actions
+      actionCards, completedCards, hasCompleted: completedCards.length > 0,
+
+      // exec
+      trendGroups, sourceBars, teamBars,
+
+      // partners
+      partnerRows,
+      rowHover: { background: '#E9ECEF' },
+
+      // raise modal
+      modalOpen: s.modalOpen,
+      openModal: () => this.setState({ modalOpen: true, discardAsk: false, errors: {}, form: { title: '', severity: '', source: 'Manual', owner: '', ownerPicked: false, due: '', notes: '' } }),
+      overlayClose: () => { dirty ? this.setState({ discardAsk: true }) : this.setState({ modalOpen: false }); },
+      stopProp: e => e.stopPropagation(),
+      discardAsk: s.discardAsk, notDiscardAsk: !s.discardAsk,
+      keepEditing: () => this.setState({ discardAsk: false }),
+      discardModal: () => this.setState({ modalOpen: false, discardAsk: false }),
+      formTitle: f.title, formSeverity: f.severity, formSource: f.source, formOwner: f.owner, formDue: f.due, formNotes: f.notes,
+      onFormTitle: setForm('title'), onFormSeverity: setForm('severity'), onFormSource: setForm('source'),
+      onFormOwner: setForm('owner'), onFormDue: setForm('due'), onFormNotes: setForm('notes'),
+      errTitle: !!s.errors.title, errSeverity: !!s.errors.severity, errOwner: !!s.errors.owner,
+      showOwnerMatches: matches.length > 0,
+      ownerMatches: matches.map(u => ({ name: u.name, role: u.role, pick: () => this.setState(st => ({ form: { ...st.form, owner: u.name, ownerPicked: true } })) })),
+      matchHover: { background: '#F8F9FA' },
+      inputFocus,
+      submitModal: () => {
+        const errors = { title: !f.title.trim(), severity: !f.severity, owner: !f.owner.trim() };
+        if (errors.title || errors.severity || errors.owner) { this.setState({ errors }); return; }
+        const id = 'ex' + Date.now();
+        const newEx = {
+          id, severity: f.severity, status: 'Awaiting action', type: 'Manual', company: '\u2014',
+          source: f.source, pushTo: f.source === 'Manual' ? 'NEXUS' : f.source, owner: f.owner,
+          age: 'Opened just now', partner: null, title: f.title, isNew: true,
+          impact: [
+            ['Detected by', 'Raised manually — ' + me, false],
+            ['Current owner', f.owner, false],
+            ['Due', f.due ? f.due.replace('T', ' ') : 'Not set', false],
+            ['Notes', f.notes || '\u2014', false]
+          ],
+          ai: null, aiConf: '', primaryLabel: 'Approve action', approved: false,
+          timeline: [{ kind: 'open', who: me, when: 'Just now', body: 'Exception raised manually by ' + me + '. Owner ' + f.owner + ' notified.' }]
+        };
+        this.setState(st => ({ modalOpen: false, exceptions: [newEx, ...st.exceptions], selectedId: id, screen: 'queue', filter: 'all', statusFilter: null, partnerFilter: null }));
+        this.toast('Exception submitted and owner notified');
+        this.notify('New exception raised manually by ' + me + ': ' + f.title, 'created');
+        setTimeout(() => this.setState(st => ({ exceptions: st.exceptions.map(e => e.id === id ? { ...e, isNew: false } : e) })), 5000);
+      },
+
+      // escalate modal
+      escalateOpen: s.escalateOpen,
+      closeEscalate: () => this.setState({ escalateOpen: false }),
+      escTo: s.esc.to, escDeadline: s.esc.deadline, escNote: s.esc.note,
+      onEscTo: e => this.setState(st => ({ esc: { ...st.esc, to: e.target.value }, escErrors: {} })),
+      onEscDeadline: e => this.setState(st => ({ esc: { ...st.esc, deadline: e.target.value } })),
+      onEscNote: e => this.setState(st => ({ esc: { ...st.esc, note: e.target.value } })),
+      errEscTo: !!s.escErrors.to,
+      submitEscalate: () => {
+        if (!s.esc.to) { this.setState({ escErrors: { to: true } }); return; }
+        if (selEx) {
+          this.setState(st => ({
+            escalateOpen: false,
+            exceptions: st.exceptions.map(e => e.id === selEx.id ? { ...e, status: 'Escalated' } : e)
+          }));
+          this.addTimeline(selEx.id, 'action', me, 'Escalated to ' + s.esc.to + (s.esc.deadline ? ' with deadline ' + s.esc.deadline.replace('T', ' ') : '') + (s.esc.note ? '. Note: ' + s.esc.note : '.'));
+          this.toast('Escalated to ' + s.esc.to.split(' \u2014 ')[0] + (s.esc.deadline ? ' with deadline ' + s.esc.deadline.replace('T', ' ') : ''));
+          this.notify('Exception escalated to ' + s.esc.to + ': ' + selEx.title, 'escalated');
+        }
+      },
+
+      // search + CSV export
+      search: s.search,
+      onSearch: e => this.setState({ search: e.target.value }),
+      exportCsv: () => {
+        const rows = ['Severity,Status,Title,Type,Company,Source,Owner,Age'].concat(
+          filtered.map(e => [e.severity, e.status, '"' + e.title.replace(/"/g, '""') + '"', e.type, e.company, e.source, e.owner, e.age].join(','))
+        ).join('\n');
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([rows], { type: 'text/csv' }));
+        a.download = 'nexus-exceptions.csv'; a.click();
+        this.toast('Exported ' + filtered.length + ' exceptions to CSV');
+      },
+
+      // notifications
+      notifOpen: s.notifOpen,
+      toggleNotif: () => this.setState(st => ({ notifOpen: !st.notifOpen, chatOpen: false })),
+      closeNotif: () => this.setState({ notifOpen: false }),
+      hasUnread: s.notifications.some(n => n.unread),
+      unreadCount: String(s.notifications.filter(n => n.unread).length),
+      markAllRead: () => this.setState(st => ({ notifications: st.notifications.map(n => ({ ...n, unread: false })) })),
+      notifItems: s.notifications.map(n => ({
+        text: n.text, time: n.time,
+        style: { display: 'flex', gap: '10px', padding: '10px 14px', borderBottom: '0.5px solid #F1F3F5', background: n.unread ? 'rgba(0,180,216,0.05)' : '#FFFFFF' },
+        dotStyle: { width: '8px', height: '8px', minWidth: '8px', borderRadius: '50%', marginTop: '5px', background: n.kind === 'overdue' || n.kind === 'escalated' ? '#E63946' : (n.kind === 'partner' ? '#2DC653' : '#00B4D8') }
+      })),
+      chanRows: [['teams', 'Microsoft Teams', 'Adaptive Cards'], ['slack', 'Slack', '#supply-chain-alerts'], ['email', 'Email / Outlook', 'Digest + instant Critical']].map(([key, label, sub]) => ({
+        label, sub,
+        toggle: () => {
+          this.setState(st => ({ channels: { ...st.channels, [key]: !st.channels[key] } }));
+          this.toast(label + ' notifications ' + (s.channels[key] ? 'off' : 'on'));
+        },
+        switchStyle: { width: '30px', minWidth: '30px', height: '16px', borderRadius: '10px', background: s.channels[key] ? '#00B4D8' : '#CED4DA', padding: '2px', cursor: 'pointer', boxSizing: 'border-box' },
+        knobStyle: { width: '12px', height: '12px', borderRadius: '50%', background: '#FFFFFF', marginLeft: s.channels[key] ? '14px' : '0', transition: 'margin-left 0.15s ease' }
+      })),
+      notifToggleRows: [['created', 'Exception created'], ['escalated', 'Escalations'], ['overdue', 'Overdue actions'], ['partner', 'Partner responses']].map(([key, label]) => ({
+        label,
+        toggle: () => this.setState(st => ({ notifToggles: { ...st.notifToggles, [key]: !st.notifToggles[key] } })),
+        switchStyle: { width: '30px', minWidth: '30px', height: '16px', borderRadius: '10px', background: s.notifToggles[key] ? '#00B4D8' : '#CED4DA', padding: '2px', cursor: 'pointer', boxSizing: 'border-box' },
+        knobStyle: { width: '12px', height: '12px', borderRadius: '50%', background: '#FFFFFF', marginLeft: s.notifToggles[key] ? '14px' : '0', transition: 'margin-left 0.15s ease' }
+      })),
+
+      // AI chat
+      chatOpen: s.chatOpen,
+      toggleChat: () => this.setState(st => ({ chatOpen: !st.chatOpen, notifOpen: false })),
+      chatInput: s.chatInput,
+      onChatInput: e => this.setState({ chatInput: e.target.value }),
+      onChatKey: e => { if (e.key === 'Enter') this.sendChat(s.chatInput); },
+      sendChat: () => this.sendChat(s.chatInput),
+      chatMsgs: s.chatMsgs.map(m => ({
+        text: m.text,
+        rowStyle: { display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start' },
+        bubbleStyle: m.role === 'user'
+          ? { maxWidth: '85%', background: '#0D1B2A', color: '#FFFFFF', fontSize: '12px', lineHeight: 1.55, padding: '8px 12px', borderRadius: '10px 10px 2px 10px' }
+          : { maxWidth: '85%', background: '#F3E8FF', borderLeft: '3px solid #7B2FBE', color: '#495057', fontSize: '12px', lineHeight: 1.55, padding: '8px 12px', borderRadius: '2px 10px 10px 10px' }
+      })),
+      chatPrompts: [
+        { label: "What's my biggest risk?", onClick: () => this.sendChat("What's my biggest risk?") },
+        { label: 'Summarise the queue', onClick: () => this.sendChat('Summarise the queue') },
+        { label: 'Which partner is slowest?', onClick: () => this.sendChat('Which partner is slowest?') }
+      ],
+      promptHover: { background: '#F3E8FF' },
+
+      // integrations
+      integrationCards: s.integrations.map(ig => ({
+        name: ig.name, dir: ig.dir, desc: ig.desc, last: ig.last,
+        initial: ig.name.replace('\u2122', '').trim()[0],
+        logoStyle: { width: '30px', height: '30px', minWidth: '30px', borderRadius: '8px', background: ig.connected ? '#CAF0F8' : '#F1F3F5', color: '#0D1B2A', fontSize: '13px', fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+        status: ig.connected ? 'Connected' : 'Not connected',
+        statusStyle: ig.connected ? badge('#E9F7EF', '#2DC653') : badge('#F1F3F5', '#6C757D'),
+        btnLabel: ig.connected ? 'Disconnect' : 'Connect',
+        btnStyle: { fontFamily: 'Inter,system-ui,sans-serif', fontSize: '11px', fontWeight: 500, color: ig.connected ? '#212529' : '#0D1B2A', background: ig.connected ? 'transparent' : '#00B4D8', border: ig.connected ? '0.5px solid #CED4DA' : 'none', borderRadius: '8px', padding: '5px 10px', cursor: 'pointer', whiteSpace: 'nowrap' },
+        toggle: () => {
+          this.setState(st => ({ integrations: st.integrations.map(x => x.id === ig.id ? { ...x, connected: !x.connected, last: x.connected ? 'Disconnected' : 'Connected just now' } : x) }));
+          this.toast(ig.connected ? ig.name + ' disconnected' : ig.name + ' connected \u2014 first sync scheduled');
+        }
+      })),
+      syncLog: s.syncLog,
+
+      // alert rules
+      ruleRows: s.rules.map(r => ({
+        name: r.name, cond: r.cond, sev: r.sev, route: r.route,
+        sevStyle: badge(SEV[r.sev].bg, SEV[r.sev].dot),
+        switchStyle: { width: '34px', minWidth: '34px', height: '18px', borderRadius: '10px', background: r.on ? '#00B4D8' : '#CED4DA', padding: '2px', cursor: 'pointer', boxSizing: 'border-box' },
+        knobStyle: { width: '14px', height: '14px', borderRadius: '50%', background: '#FFFFFF', marginLeft: r.on ? '16px' : '0', transition: 'margin-left 0.15s ease' },
+        toggle: () => {
+          this.setState(st => ({ rules: st.rules.map(x => x.id === r.id ? { ...x, on: !x.on } : x) }));
+          this.toast('Rule "' + r.name + '" ' + (r.on ? 'disabled' : 'enabled'));
+        },
+        onEdit: () => this.setState({ ruleModalOpen: true, ruleForm: { id: r.id, name: r.name, cond: r.cond, sev: r.sev, route: r.route }, ruleErrors: {} })
+      })),
+      ruleModalOpen: s.ruleModalOpen,
+      ruleModalTitle: s.ruleForm.id ? 'Edit rule' : 'New rule',
+      ruleSubmitLabel: s.ruleForm.id ? 'Save rule' : 'Create rule',
+      openNewRule: () => this.setState({ ruleModalOpen: true, ruleForm: { id: null, name: '', cond: '', sev: 'High', route: 'SC Planner' }, ruleErrors: {} }),
+      closeRuleModal: () => this.setState({ ruleModalOpen: false }),
+      ruleName: s.ruleForm.name, ruleCond: s.ruleForm.cond, ruleSev: s.ruleForm.sev, ruleRoute: s.ruleForm.route,
+      onRuleName: e => this.setState(st => ({ ruleForm: { ...st.ruleForm, name: e.target.value }, ruleErrors: { ...st.ruleErrors, name: false } })),
+      onRuleCond: e => this.setState(st => ({ ruleForm: { ...st.ruleForm, cond: e.target.value }, ruleErrors: { ...st.ruleErrors, cond: false } })),
+      onRuleSev: e => this.setState(st => ({ ruleForm: { ...st.ruleForm, sev: e.target.value } })),
+      onRuleRoute: e => this.setState(st => ({ ruleForm: { ...st.ruleForm, route: e.target.value } })),
+      errRuleName: !!s.ruleErrors.name, errRuleCond: !!s.ruleErrors.cond,
+      submitRule: () => {
+        const rf = s.ruleForm;
+        const errs = { name: !rf.name.trim(), cond: !rf.cond.trim() };
+        if (errs.name || errs.cond) { this.setState({ ruleErrors: errs }); return; }
+        if (rf.id) {
+          this.setState(st => ({ ruleModalOpen: false, rules: st.rules.map(x => x.id === rf.id ? { ...x, name: rf.name.trim(), cond: rf.cond.trim(), sev: rf.sev, route: rf.route } : x) }));
+          this.toast('Rule "' + rf.name.trim() + '" updated');
+        } else {
+          this.setState(st => ({ ruleModalOpen: false, rules: [...st.rules, { id: 'r' + Date.now(), on: true, name: rf.name.trim(), cond: rf.cond.trim(), sev: rf.sev, route: rf.route }] }));
+          this.toast('Rule "' + rf.name.trim() + '" created and enabled');
+        }
+        this.notify('Alert rule ' + (rf.id ? 'updated' : 'created') + ' by ' + me + ': ' + rf.name.trim(), 'created');
+      },
+
+      // teams
+      teamCards: [
+        { name: 'QC Ops', lead: 'Eric Rousseau', members: ['Eric Rousseau', 'A. Peeters', 'K. M\u00FCller', 'S. Novak'], esc: 'QC Ops Lead \u2192 Site Director \u2192 SC Director' },
+        { name: 'SC Planning', lead: 'Jana Lindqvist', members: ['Jana Lindqvist', 'M. Dubois', 'P. Costa', 'R. Singh', 'T. Larsen', 'I. Petrova'], esc: 'SC Planner \u2192 SC Planning Lead \u2192 SC Director' },
+        { name: 'External Mfg', lead: 'Maria Kovacs', members: ['Maria Kovacs', 'D. Okafor', 'H. Tanaka'], esc: 'External Mfg Manager \u2192 SC Director' },
+        { name: 'Procurement', lead: 'Tom Berger', members: ['Tom Berger', 'L. Fischer', 'N. Haddad', 'E. Johansson', 'C. Rivera'], esc: 'Procurement Lead \u2192 CPO' },
+        { name: 'Demand Planning', lead: 'Sofie De Vries', members: ['Sofie De Vries', 'G. Rossi', 'W. Chen', 'B. Adeyemi'], esc: 'Demand Planner \u2192 IBP Lead \u2192 SC Director' }
+      ].map(t => ({
+        name: t.name, lead: t.lead, esc: t.esc, count: String(t.members.length),
+        avatars: t.members.map(n => ({ name: n, init: initials(n) }))
+      })),
+
+      // audit log
+      auditRows: s.exceptions.flatMap(e => e.timeline.map(t => ({ e, t }))).map((x, i) => ({
+        when: x.t.when, who: x.t.who, body: x.t.body, ex: x.e.title,
+        kind: x.t.kind === 'open' ? 'Detected' : (x.t.kind === 'action' ? 'Action' : 'Note'),
+        kindStyle: x.t.kind === 'open' ? badge('#FDECEC', '#E63946') : (x.t.kind === 'action' ? badge('#EBF3FF', '#3A86FF') : badge('#F1F3F5', '#495057')),
+        rowStyle: { background: i % 2 === 0 ? '#F8F9FA' : '#FFFFFF', borderBottom: '0.5px solid #CED4DA' }
+      })),
+      exportAudit: () => {
+        const all = s.exceptions.flatMap(e => e.timeline.map(t => [t.when, t.who, t.kind, '"' + e.title.replace(/"/g, '""') + '"', '"' + t.body.replace(/"/g, '""') + '"'].join(',')));
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([['When,Actor,Type,Exception,Entry'].concat(all).join('\n')], { type: 'text/csv' }));
+        a.download = 'nexus-audit-log.csv'; a.click();
+        this.toast('Audit log exported (' + all.length + ' entries)');
+      },
+
+      // partner scorecard
+      scorecardOpen: !!s.scorecardFor,
+      closeScorecard: () => this.setState({ scorecardFor: null }),
+      nameHover: { color: '#0099BB', borderBottomColor: '#0099BB' },
+      scorecard: (() => {
+        const p = s.partners.find(x => x.name === s.scorecardFor);
+        if (!p) return { name: '', type: '', respRows: [], cntRows: [], filterQueue: () => {} };
+        const base = parseFloat(p.resp);
+        const resp = [base + 1.4, base + 0.5, base];
+        const cnts = [4, 3, 2];
+        const rColor = h => h < 4 ? '#2DC653' : (h <= 8 ? '#F4A261' : '#E63946');
+        return {
+          name: p.name, type: p.type,
+          respRows: ['April', 'May', 'June'].map((m, i) => ({
+            m, v: resp[i].toFixed(1) + 'h',
+            barStyle: { width: Math.round(resp[i] / (base + 1.4) * 100) + '%', height: '6px', background: rColor(resp[i]), borderRadius: '3px' }
+          })),
+          cntRows: ['April', 'May', 'June'].map((m, i) => ({
+            m, v: String(cnts[i]),
+            barStyle: { width: Math.round(cnts[i] / 4 * 100) + '%', height: '6px', background: '#00B4D8', borderRadius: '3px' }
+          })),
+          filterQueue: () => this.setState({ scorecardFor: null, screen: 'queue', partnerFilter: p.name, filter: 'all', statusFilter: null })
+        };
+      })(),
+
+      // users & permissions
+      userRows: s.usersList.map((u, i) => ({
+        name: u.name, team: u.team, role: u.role, last: u.last, init: initials(u.name),
+        status: u.status,
+        statusStyle: u.status === 'Active' ? badge('#E9F7EF', '#2DC653') : (u.status === 'Invited' ? badge('#FEF3E2', '#F4A261') : badge('#F1F3F5', '#6C757D')),
+        rowStyle: { background: i % 2 === 0 ? '#F8F9FA' : '#FFFFFF', borderBottom: '0.5px solid #CED4DA' },
+        onRole: e => {
+          const role = e.target.value;
+          this.setState(st => ({ usersList: st.usersList.map(x => x.id === u.id ? { ...x, role } : x) }));
+          this.toast(u.name + ' is now ' + role);
+        },
+        toggleLabel: u.status === 'Deactivated' ? 'Reactivate' : (u.status === 'Invited' ? 'Resend invite' : 'Deactivate'),
+        onToggle: () => {
+          if (u.status === 'Invited') { this.toast('Invite resent to ' + u.name); return; }
+          const next = u.status === 'Active' ? 'Deactivated' : 'Active';
+          this.setState(st => ({ usersList: st.usersList.map(x => x.id === u.id ? { ...x, status: next } : x) }));
+          this.toast(u.name + ' ' + (next === 'Active' ? 'reactivated' : 'deactivated'));
+        }
+      })),
+      permRows: [
+        ['View exception queue', '\u2713', '\u2713', '\u2713', 'Own only', '\u2713'],
+        ['Approve actions', '\u2713', '\u2713', '\u2713', '\u2014', '\u2713'],
+        ['Escalate', '\u2713', '\u2713', '\u2713', '\u2014', '\u2713'],
+        ['Raise exceptions', '\u2713', '\u2713', '\u2713', '\u2713', '\u2713'],
+        ['Executive view', '\u2014', '\u2713', '\u2713', '\u2014', '\u2713'],
+        ['Manage alert rules', '\u2014', '\u2713', '\u2014', '\u2014', '\u2713'],
+        ['Manage integrations', '\u2014', '\u2014', '\u2014', '\u2014', '\u2713'],
+        ['Manage users & roles', '\u2014', '\u2014', '\u2014', '\u2014', '\u2713'],
+        ['Export data', '\u2713', '\u2713', '\u2713', '\u2014', '\u2713']
+      ].map(([cap, c1, c2, c3, c4, c5], i) => ({
+        cap, c1, c2, c3, c4, c5,
+        rowStyle: { background: i % 2 === 0 ? '#F8F9FA' : '#FFFFFF' }
+      })),
+
+      // invite modal
+      inviteOpen: s.inviteOpen,
+      openInvite: () => this.setState({ inviteOpen: true, invite: { name: '', email: '', role: 'Planner', team: 'SC Planning' }, invErrors: {} }),
+      closeInvite: () => this.setState({ inviteOpen: false }),
+      invName: s.invite.name, invEmail: s.invite.email, invRole: s.invite.role, invTeam: s.invite.team,
+      onInvName: e => this.setState(st => ({ invite: { ...st.invite, name: e.target.value }, invErrors: { ...st.invErrors, name: false } })),
+      onInvEmail: e => this.setState(st => ({ invite: { ...st.invite, email: e.target.value }, invErrors: { ...st.invErrors, email: false } })),
+      onInvRole: e => this.setState(st => ({ invite: { ...st.invite, role: e.target.value } })),
+      onInvTeam: e => this.setState(st => ({ invite: { ...st.invite, team: e.target.value } })),
+      errInvName: !!s.invErrors.name, errInvEmail: !!s.invErrors.email,
+      submitInvite: () => {
+        const inv = s.invite;
+        const errs = { name: !inv.name.trim(), email: !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(inv.email) };
+        if (errs.name || errs.email) { this.setState({ invErrors: errs }); return; }
+        this.setState(st => ({
+          inviteOpen: false,
+          usersList: [...st.usersList, { id: 'u' + Date.now(), name: inv.name.trim(), role: inv.role, team: inv.team, status: 'Invited', last: '\u2014' }]
+        }));
+        this.toast('Invite sent to ' + inv.email);
+        this.notify('User invited: ' + inv.name.trim() + ' (' + inv.role + ', ' + inv.team + ')', 'created');
+      },
+
+      // workspace settings
+      slaRows: [
+        ['Critical', 'slaC', '#E63946'], ['High', 'slaH', '#F4A261'], ['Medium', 'slaM', '#3A86FF']
+      ].map(([label, key, color]) => ({
+        label: label + ' \u2014 time to first action',
+        value: String(s.settings[key]),
+        dotStyle: { width: '8px', height: '8px', minWidth: '8px', borderRadius: '50%', background: color, display: 'inline-block' },
+        onChange: e => this.setState(st => ({ settings: { ...st.settings, [key]: Math.max(1, parseInt(e.target.value, 10) || 1) } }))
+      })),
+      featureRows: [
+        ['aiOn', 'AI suggestions', 'Purple suggestion box on exception details'],
+        ['autoEsc', 'Auto-escalation', 'Escalate unanswered partner requests at deadline'],
+        ['teamsOn', 'Teams notifications', 'Push events to Microsoft Teams channels'],
+        ['portal', 'Partner portal', 'Phase 2 \u2014 CMO/supplier self-service responses']
+      ].map(([key, label, sub]) => ({
+        label, sub,
+        toggle: () => {
+          this.setState(st => ({ settings: { ...st.settings, [key]: !st.settings[key] } }));
+          this.toast(label + ' ' + (s.settings[key] ? 'disabled' : 'enabled'));
+        },
+        switchStyle: { width: '34px', minWidth: '34px', height: '18px', borderRadius: '10px', background: s.settings[key] ? '#00B4D8' : '#CED4DA', padding: '2px', cursor: 'pointer', boxSizing: 'border-box' },
+        knobStyle: { width: '14px', height: '14px', borderRadius: '50%', background: '#FFFFFF', marginLeft: s.settings[key] ? '16px' : '0', transition: 'margin-left 0.15s ease' }
+      })),
+      setCurrency: s.settings.currency,
+      onSetCurrency: e => this.setState(st => ({ settings: { ...st.settings, currency: e.target.value } })),
+      setRetention: s.settings.retention,
+      onSetRetention: e => this.setState(st => ({ settings: { ...st.settings, retention: e.target.value } })),
+      saveSettings: () => { this.toast('Settings saved \u2014 applied workspace-wide'); this.notify('Workspace settings updated by ' + me, 'created'); },
+
+      // toasts + shared
+      toasts: s.toasts,
+      btnActive, outlineBtnHover, primaryBtnHover
+    };
+  }
+}
+</script>
+</body>
+</html>

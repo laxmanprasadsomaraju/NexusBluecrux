@@ -1,0 +1,75 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  width: 400px;
+  background: var(--white);
+  border-radius: var(--radius-modal);
+  border: 0.5px solid var(--mid-gray);
+  box-shadow: var(--shadow-modal);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.wide {
+  width: 440px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 0.5px solid var(--mid-gray);
+}
+
+.title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.close {
+  cursor: pointer;
+  color: var(--timestamp-gray);
+  display: flex;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.body {
+  padding: 16px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border-top: 0.5px solid var(--mid-gray);
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+.shake {
+  animation: shake 0.4s ease;
+}

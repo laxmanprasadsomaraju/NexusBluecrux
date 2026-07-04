@@ -1,0 +1,22 @@
+// Centralized React Query cache keys so invalidation targets are consistent everywhere.
+export const queryKeys = {
+  exceptions: (params?: Record<string, unknown>) => ['exceptions', params] as const,
+  exceptionStats: () => ['exceptions', 'stats'] as const,
+  exception: (id: string) => ['exception', id] as const,
+  actions: (params?: Record<string, unknown>) => ['actions', params] as const,
+  analyticsTrend: () => ['analytics', 'resolution-trend'] as const,
+  analyticsBySource: () => ['analytics', 'by-source'] as const,
+  analyticsTeamResponse: () => ['analytics', 'team-response'] as const,
+  analyticsValueAtRisk: () => ['analytics', 'value-at-risk'] as const,
+  analyticsOnTimeRate: () => ['analytics', 'on-time-rate'] as const,
+  partners: () => ['partners'] as const,
+  partnerScorecard: (id: string) => ['partners', id, 'scorecard'] as const,
+  integrations: () => ['integrations'] as const,
+  syncLog: () => ['integrations', 'sync-log'] as const,
+  rules: () => ['rules'] as const,
+  users: () => ['users'] as const,
+  settings: () => ['settings'] as const,
+  notifications: () => ['notifications'] as const,
+  auditLog: (params?: Record<string, unknown>) => ['audit-log', params] as const,
+  teams: () => ['teams'] as const,
+};

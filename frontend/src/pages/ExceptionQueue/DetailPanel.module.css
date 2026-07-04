@@ -1,0 +1,196 @@
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 20px 12px 20px;
+}
+
+.header {
+  border-bottom: 0.5px solid var(--mid-gray);
+  padding-bottom: 14px;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--black);
+  line-height: 1.4;
+}
+
+.badgeRow {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--mid-gray);
+  padding-bottom: 6px;
+  border-bottom: 0.5px solid var(--mid-gray);
+}
+
+.section {
+  margin-top: 16px;
+}
+
+.impactRows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.impactRow {
+  display: flex;
+  align-items: baseline;
+}
+
+.impactLabel {
+  width: 130px;
+  min-width: 130px;
+  font-size: 13px;
+  color: var(--timestamp-gray);
+}
+
+.impactValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.traceBox {
+  margin-top: 14px;
+  background: var(--off-white);
+  border: 0.5px solid var(--mid-gray);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.traceLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--timestamp-gray);
+  margin-bottom: 8px;
+}
+
+.aiBox {
+  background: var(--purple-light);
+  border-left: 4px solid var(--purple);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 16px;
+  cursor: default;
+}
+
+.aiHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--purple);
+}
+
+.aiBody {
+  font-size: 12px;
+  color: var(--dark-gray);
+  line-height: 1.6;
+  margin-top: 6px;
+}
+
+.aiConfidence {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--purple);
+  margin-top: 4px;
+}
+
+.timeline {
+  margin-top: 12px;
+}
+
+.timelineItem {
+  display: flex;
+  gap: 10px;
+}
+
+.timelineDotCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timelineDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.timelineLine {
+  width: 0.5px;
+  flex: 1;
+  background: var(--mid-gray);
+  min-height: 12px;
+}
+
+.timelineBody {
+  padding-bottom: 14px;
+  flex: 1;
+}
+
+.timelineHead {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.timelineWho {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.timelineWhen {
+  font-size: 11px;
+  color: var(--timestamp-gray);
+}
+
+.timelineText {
+  font-size: 12px;
+  color: var(--dark-gray);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.noteBox {
+  margin-top: 4px;
+  margin-left: 24px;
+}
+
+.actionBar {
+  min-height: 56px;
+  background: var(--white);
+  border-top: 0.5px solid var(--mid-gray);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 9px 20px;
+}
+
+.sourceLink {
+  margin-left: auto;
+}
+
+.confirmText {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+}

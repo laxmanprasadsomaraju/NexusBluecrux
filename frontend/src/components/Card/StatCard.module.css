@@ -1,0 +1,39 @@
+.card {
+  background: var(--light-gray);
+  border-radius: var(--radius-card);
+  border: 0.5px solid var(--mid-gray);
+  padding: 14px;
+  height: 80px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  text-align: left;
+  font-family: var(--font-family);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  background: var(--off-white);
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--timestamp-gray);
+}
+
+.value {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.delta {
+  font-size: 11px;
+}

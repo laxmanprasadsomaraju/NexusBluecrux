@@ -1,0 +1,300 @@
+
+NEXUS
+by Bluecrux
+Supply Chain Exception &amp; Escalation Hub
+Full Product Specification — Interview Submission
+Turning supply chain alerts into governed, trackable, cross-team decisions
+1. The problem — grounded in Bluecrux&apos;s own client evidence
+Every case study on Bluecrux&apos;s website tells the same story from a different angle. The tools exist. The data exists. But the moment a problem surfaces, teams fall apart. Here is what actually happened to Bluecrux&apos;s real clients:
+AstraZeneca — QC had no seat at the table
+Real client quote (AstraZeneca Director of QC Capacity &amp; Modelling):&quot;QC always wanted a seat at the table in supply consensus meetings and we could go but we weren&apos;t getting any value from them because we didn&apos;t have the capability to show what our capacities were.&quot;What happened: QC lab teams were using manual Excel reports. By the time they spotted a capacity problem, Supply Chain had already made decisions. Nobody&apos;s fault — there was no shared, real-time view and no governed process for QC to raise an issue and get it actioned.
+Argenx (biotech) — no coordination across CMO partners
+Real pain (from Argenx case study):&quot;Difficulties in aligning supply chain planning across different regions and CMO partners. Time-intensive and complex to run what-if scenarios. No integration between long-term network planning and order management.&quot;What happened: A biotech company with a €2.2B revenue had no systematic way to flag, escalate and resolve supply problems across their external manufacturing network. Each issue became a fire drill handled over email.
+Maesa (beauty/CPG) — high inventory, no alerting, all manual
+Real pain (from Maesa case study):&quot;High inventory due to difficulty in balancing cash, cost &amp; service. Complex planning environment with a mix of turnkey and non-turnkey. Desire to move away from manual planning.&quot;What happened: No exception alerting meant problems were discovered late. Planners were doing everything manually — reactive, not proactive.
+Clariant Catalysts — opportunities hidden, no structured escalation
+Real pain (from Clariant case study):&quot;The main challenge centred on the perception that there were limited opportunities to reduce inventory.&quot; Bluecrux had to run a 4-month diagnostic just to surface what the problems were.What happened: Nobody had a systematic view of what exceptions existed, who owned them, and what impact they were having. Decisions were made on assumptions, not facts.
+The common thread across every case
+Every client had good tools — SAP, Anaplan, Axon, Helion. But they all suffered from the same gap: when the tool detected a problem, nobody had a governed process to:
+See the exception clearly with business impact attached
+Know who owns it and what action they need to take
+Track whether it got resolved and how long it took
+Report to leadership on value recovered vs value at risk
+This is not a data problem. Bluecrux&apos;s tools already surface the data. This is an execution and coordination problem — and that is exactly what NEXUS solves.
+2. What is NEXUS?
+NEXUS is a Supply Chain Exception and Escalation Hub. In plain English:
+One-line description:NEXUS automatically catches supply chain problems from Axon, Helion, Anaplan, Binocs and SAP — then turns each one into an assigned, tracked, time-bound action with a named owner, a deadline, an AI-suggested resolution, and a live audit trail — so nothing falls through the cracks.
+What it is NOT
+Not another dashboard — Axon already does dashboards brilliantly
+Not a replacement for Axon, Helion, Binocs or Anaplan — it sits on top of them
+Not a generic project management tool — it is purpose-built for supply chain exceptions
+Not an AI that makes decisions — it suggests, humans approve, everything is auditable
+Who uses it
+Persona
+What they do in NEXUS
+Supply Chain Planning Lead
+Reviews the exception queue every morning. Approves or delegates actions. Tracks how long teams are taking to respond.
+QC / Lab Operations Manager
+Gets notified immediately when a batch hold creates a supply risk. Provides resolution update directly in NEXUS — no more email chains.
+External Manufacturing Manager
+Manages CMO capacity exceptions. Sends capacity requests to partners through the tool and tracks their response time.
+Supply Chain Director / VP
+Opens the Executive View. Sees total value at risk, team response times, and resolution trends — in one screen, without chasing updates.
+Plant / Site Manager
+Receives assigned actions for site-specific exceptions. Logs progress and closes them when resolved.
+3. Full feature specification
+Feature 1 — Exception queue (the nerve centre)
+This is the first screen every user sees when they log in. It is the single source of truth for all active supply chain problems.
+What it shows:
+All open exceptions, pulled automatically from Axon, Helion, Anaplan, Binocs and SAP
+Each exception shows: severity level (Critical / High / Medium), source system, assigned owner, age (how long it has been open), current status
+Four summary stat cards at the top: Critical open, Awaiting action, Resolved this week, Average time to act
+Filter options (click to filter):
+All — shows everything
+Critical — only red severity
+Mine — only exceptions assigned to the logged-in user
+Partner — only exceptions involving CMOs, suppliers or 3PLs
+What each click does:
+Click any exception card → Opens the full detail panel on the right. Shows impact analysis, activity timeline, AI suggestion, and action buttons.
+&quot;Raise exception&quot; button → Opens a form modal. User enters: title, severity, source system, owner, and notes. On submit, exception appears in queue and owner gets notified.
+&quot;Sync&quot; button → Manually triggers a data pull from connected source systems.
+Severity dot (red/amber/blue) → Visual indicator — red = critical, amber = high, blue = medium. Colour-coded consistently throughout the tool.
+Feature 2 — Exception detail panel
+When a user clicks any exception card, the right panel loads the full context. This replaces the current reality of digging through emails, Axon dashboards and Teams messages.
+Sections in the detail panel:
+Impact analysis — Detected by (which system), business impact in currency (e.g. €1.2M revenue at risk), affected volume, risk date, current owner, escalation path
+AI suggestion box — A cyan-bordered panel showing what the AI recommends and its confidence score (e.g. &apos;Re-slot batch to Thu AM — confidence 87%&apos;). This is always clearly labelled as a suggestion, never an automatic action.
+Activity timeline — A chronological log of everything that has happened: when Axon detected it, when the owner acknowledged it, what actions have been taken, what partner responses came in. Immutable — cannot be deleted.
+Partner status panel — Appears for CMO/supplier exceptions. Shows when a request was sent to the partner, whether they acknowledged it, and auto-escalation countdown.
+Action buttons at the bottom:
+Approve [action] — Confirms the AI-suggested or proposed action. Logs it in the timeline with user name and timestamp. Pushes the decision back to the source system where applicable (e.g. confirms re-slot in Binocs).
+Escalate — Opens a form to escalate to the next level in the escalation path. User can add a note and set a deadline.
+Add note — Opens a text input to log a comment into the timeline. Useful for adding context or updating status.
+Open in [source system] — Deep link that opens the relevant record directly in Axon, Helion, Binocs or SAP. Saves the user having to navigate manually.
+Feature 3 — My actions
+A personal to-do list — not a generic task manager, but a supply-chain-specific action list showing only what this user needs to act on today.
+What each action card shows:
+Status badge: Overdue (red) / Due today (amber) / Tomorrow (blue) / This week (gray)
+Action title — specific and actionable (e.g. &apos;Approve Binocs re-slot for Batch X-4421&apos;)
+Context: which exception it comes from, severity level, due time
+One-click action button (Approve / Review / Start) right on the card — no need to navigate to the exception first
+Sort order:
+Overdue items always at top
+Then due today, ordered by deadline time
+Then tomorrow, then this week
+Feature 4 — Executive view
+Designed for Supply Chain Directors and VPs. One screen that answers the question: &apos;How are we doing?&apos; — without needing to ask anyone.
+Cards and charts on this screen:
+Exception resolution trend — A bar chart showing open vs resolved exceptions over the last 4 weeks. Leadership can see immediately whether things are getting better or worse.
+Exceptions by source system — Horizontal bar chart showing how many exceptions are coming from Axon vs Helion vs Anaplan vs manual. Helps identify systemic issues.
+Team response times — Bar chart by team (QC, SC Planning, External Mfg, Procurement) showing average time from exception opened to first action. Red = slow, green = fast. Makes accountability visible.
+Value at risk — Total € value of all open exceptions combined, plus the biggest single contributor. Compared to last week to show trend.
+Actions completed on time — Percentage of actions that were completed before their deadline. Target line shown (e.g. 85%). Compared to last month.
+Export PDF button — One click generates a PDF version of the executive view for board/leadership reporting.
+Feature 5 — Partner network view
+Shows all CMOs, suppliers and 3PLs in a simple table. Designed for External Manufacturing Managers and Procurement teams who need to know which partner is causing problems right now.
+Columns:
+Partner name
+Type (CMO / Supplier / 3PL)
+Open exceptions — how many and what severity
+Response time — average hours from request sent to partner response
+Status badge — On track / Monitoring / Needs action
+What clicking a partner row does:
+Filters the main exception queue to show only that partner&apos;s exceptions
+Shows partner scorecard with trend over last 90 days
+Feature 6 — Raise exception modal (manual entry)
+Any user can raise an exception manually — for situations not yet detected by the connected systems. Designed to take under 60 seconds.
+Form fields:
+Exception title (free text)
+Severity (dropdown: Critical / High / Medium)
+Source system (dropdown: Axon / Helion / Anaplan / SAP / Manual)
+Owner (search by name or team)
+Notes / context (free text area)
+What happens on submit:
+Exception appears immediately in the queue
+Assigned owner receives an in-app notification
+Timeline entry is automatically created: &apos;Exception raised manually by [user name] at [time]&apos;
+4. Full end-to-end user flows
+Flow A — QC batch hold (AstraZeneca scenario)
+This is the most critical flow and the one that directly addresses the AstraZeneca pain point where QC had no way to communicate capacity issues to supply chain.
+Step
+What happens
+Step 1
+Axon detects that Batch X-4421 has entered a QC hold at Site 3. It estimates the EU release window is at risk by 3 days. This triggers an automatic exception in NEXUS.
+Step 2
+NEXUS classifies it as Critical (QC hold + release window risk). It assigns it to Eric R. (QC Ops Lead) based on routing rules. Eric gets an in-app notification.
+Step 3
+Eric opens NEXUS. He sees the exception in his queue and clicks it. The detail panel shows: batch number, release date risk, estimated €1.2M revenue impact, and Binocs data showing analyst availability.
+Step 4
+The AI suggestion box recommends: &apos;Re-slot batch to Thu AM with analyst Müller — projected release Nov 13, within window. Confidence 87%.&apos;
+Step 5
+Eric reviews the suggestion, agrees, and clicks &apos;Approve re-slot&apos;. NEXUS logs his approval with name and timestamp. It pushes the reschedule instruction to Binocs.
+Step 6
+Binocs confirms the re-slot. NEXUS updates the exception status to &apos;Action taken — monitoring&apos;. The timeline entry is added automatically.
+Step 7
+Supply Chain Director opens the Executive View the next morning. She sees the exception moved from &apos;Critical open&apos; to &apos;Resolved&apos;. Resolution time: 6.2 hours. Value protected: €1.2M.
+Flow B — CMO capacity shortfall (Argenx/biotech scenario)
+Directly addresses the Argenx pain point: no coordination across CMO partners, no way to flag and escalate supply gaps.
+Step
+What happens
+Step 1
+Helion&apos;s capacity model detects a 3,200-unit shortfall at Lonza CMO for Week 26–28. Q3 product launch is 6 weeks away. NEXUS auto-creates a Critical exception.
+Step 2
+Exception is assigned to Maria K. (External Manufacturing Manager). She sees it in her &apos;My Actions&apos; list marked as &apos;Due today&apos;.
+Step 3
+Maria opens the detail panel. She sees: shortfall volume, launch date, inventory buffer (only 8 days), and the partner status panel showing Lonza has not yet responded.
+Step 4
+Maria clicks &apos;Send capacity request to Lonza&apos;. NEXUS sends a structured request through the partner portal. Auto-escalation is set: if no response by 17:00, it escalates to the Supply Chain Director.
+Step 5
+Lonza responds at 15:30: they can cover 2,000 units but not the full 3,200. NEXUS logs the partial response in the timeline.
+Step 6
+Maria clicks &apos;Confirm backup site&apos; (Samsung Biologics). NEXUS logs the decision, updates the exception to &apos;Resolution in progress&apos;, and notifies the procurement team.
+Step 7
+All actions and decisions are visible to the Supply Chain Director in the Executive View — no status meeting needed, no email chain to read.
+Flow C — Inventory drift (Maesa/Clariant scenario)
+Addresses the Maesa and Clariant pain: no alerting, no escalation structure, reactive decision-making on inventory.
+Step
+What happens
+Step 1
+Axon detects that SKU-089 safety stock at the DE warehouse has dropped to 4.2 days (policy: 14 days). Stockout projected in 5 days. NEXUS creates a High exception.
+Step 2
+Jana L. (SC Planner) sees it in her queue. She opens the detail panel — shows current vs policy stock level, replenishment ETA (+9 days standard), and stockout risk date.
+Step 3
+AI suggestion: &apos;Expedite replenishment via air freight — cost €4,200, prevents stockout with 91% confidence.&apos;
+Step 4
+Jana clicks &apos;Approve expedite&apos;. NEXUS logs the approval and pushes the expedite instruction to SAP as a purchase order change.
+Step 5
+SAP confirms the order change. NEXUS marks exception status as &apos;Action taken&apos;. Timeline records: who approved, what action, at what time, at what cost.
+Step 6
+Next week, the Executive View shows this exception resolved in 3.1 hours — below the 6.2h average — contributing to the improving trend.
+5. Technical architecture — what to connect and how
+System integrations — MVP (must have at launch)
+System
+Integration purpose
+Axon™ (Bluecrux)
+Read exceptions and KPI alerts from Axon&apos;s performance and inventory command centers via API. Push approved decisions back (e.g. parameter updates).
+Helion™ (Bluecrux)
+Pull CMO capacity exceptions and supply gap alerts. Push confirmed capacity decisions.
+Binocs™ (Bluecrux)
+Read scheduling conflicts and QC hold alerts. Push re-slot approvals.
+SAP S/4HANA
+Pull inventory deviations, lead time drift, and purchase order status. Push expedite confirmations and order changes.
+Anaplan
+Pull forecast accuracy drops and planning exceptions. Read-only in MVP.
+Microsoft Entra ID / SSO
+Single sign-on so users log in with their existing company credentials. Role-based access (planner / manager / director / partner).
+Microsoft Teams
+Send notifications to Teams when exceptions are created, escalated, or overdue. Users can acknowledge directly from Teams without opening NEXUS.
+System integrations — Phase 2 (add after MVP validated)
+System
+Integration purpose
+Partner portal (CMO/supplier-facing)
+Give CMO partners a read-only view of their exceptions and a form to submit responses. No need for partners to have Helion access.
+OMP / Kinaxis
+Pull planning exceptions from alternative APS platforms used by some Bluecrux clients.
+LIMS / QMS systems
+Pull quality-related exceptions directly from lab information management systems.
+Email / Outlook
+For partners or stakeholders who do not use the portal — send structured exception emails and parse responses back into the timeline.
+Technology stack recommendation
+Layer
+Choice and rationale
+Cloud platform
+Microsoft Azure — Bluecrux already has Axon on Microsoft Marketplace. Azure-native deployment reduces friction for enterprise clients.
+Frontend
+React + TypeScript — industry standard for enterprise SaaS. Supports embedded portal patterns for partner-facing views.
+Backend / API
+Python + FastAPI — strong for analytics and AI integration. Handles event-driven exception processing efficiently.
+Database
+PostgreSQL for core data. Event store for immutable audit timeline.
+AI / suggestion engine
+Azure OpenAI (GPT-4) with retrieval-augmented generation — suggestions grounded in real data from connected systems, not hallucinated.
+Notifications
+Azure Service Bus for event-driven alerts. Microsoft Teams webhook integration.
+Identity
+Microsoft Entra ID (Azure AD) — standard for Bluecrux&apos;s enterprise client base. B2B federation for partner portal.
+Audit log
+Append-only event log — every action is immutable and timestamped. Required for regulated life-sciences workflows.
+6. MVP scope — what to build first
+The biggest mistake in building a tool like this is trying to do everything at once. The MVP must prove one thing: that a supply chain exception can go from detection to governed resolution without email, spreadsheets or chasing people.
+MVP includes — build these first
+Exception queue with four filters (All / Critical / Mine / Partner)
+Four summary stat cards (Critical open / Awaiting action / Resolved / Avg time to act)
+Detail panel with impact analysis, AI suggestion, activity timeline, action buttons
+My actions screen — personal to-do list with status badges and one-click approve
+Raise exception form — manual exception creation in under 60 seconds
+Three core exception types only: QC hold, CMO capacity gap, Inventory drift
+Integrations: Axon (read), Binocs (read + write), SAP (read + write), Teams notifications
+SSO via Microsoft Entra ID
+Basic executive view — 4 stat cards and team response time bar chart
+MVP excludes — defer to Phase 2
+Partner portal (CMOs logging in directly)
+Full PDF export
+OMP / Kinaxis integrations
+Helion integration (add in Phase 2 after Axon is stable)
+Advanced analytics / trend charts
+Mobile app (web responsive is sufficient for MVP)
+MVP timeline estimate
+Phase
+Scope
+Month 1–2
+Discovery, integration architecture, design system, authentication. Set up connections to Axon and SAP (read-only). Build exception data model.
+Month 3–4
+Build exception queue, detail panel, activity timeline, action buttons. Connect Binocs write-back. Basic notification to Teams.
+Month 5–6
+My actions screen, raise exception form, basic executive view. First pilot with 1 Bluecrux client (ideally a pharma/biotech account that already uses Axon and Binocs).
+Month 7–8
+Pilot feedback, hardening, security review. Add Helion integration. Expand to 3 exception types.
+Month 9+
+Partner portal, full executive view, additional integrations. Commercial launch.
+7. Success metrics — how to know it is working
+These are the metrics Bluecrux should track from day one. They are based on the language Bluecrux already uses in its own case studies and product pages — inventory reduction, lead-time reduction, hours saved, cost avoidance.
+Operational metrics (measured inside the tool)
+Metric
+What it measures and target
+Average time to first action
+How long from exception detected to first owner action. Target: under 4 hours for critical. Baseline today: typically 1–3 days via email.
+Exception resolution rate
+Percentage of exceptions resolved within their target window. Target: 80%+ within first 6 months.
+Actions completed on time
+Percentage of assigned actions completed before their deadline. Target: 85%. This is the headline KPI for the executive view.
+AI suggestion acceptance rate
+How often users approve the AI-recommended action vs overriding it. Target: 60%+ acceptance — if lower, suggests suggestions need tuning.
+Manual exceptions raised
+Volume of exceptions raised manually vs auto-detected. High manual = detection gaps in source systems. Low manual = tool is trusted.
+Business value metrics (reported in executive view)
+Metric
+What it measures
+Value at risk — open
+Total € value of unresolved exceptions. Should decrease over time as resolution rate improves.
+Value protected — resolved
+Total € value of exceptions resolved before they caused a business impact. This is the commercial case for the tool.
+Partner response latency
+Average hours for CMOs and suppliers to respond to capacity requests. Directly addressable by the partner network view.
+Escalations avoided
+How many exceptions were resolved at owner level before needing to escalate. Reduces leadership burden.
+Hours saved per week
+Estimated hours removed from manual chasing, email threads and status meetings. Easy to self-report in quarterly reviews.
+8. Why this tool, why now, why Bluecrux
+The strategic case in plain English:Bluecrux already has the best supply chain analytics stack in its category — Axon, Binocs, Helion, and deep expertise in Anaplan, OMP and SAP. The tools detect problems. The consultants diagnose them. But between detection and resolution, there is a gap filled with emails, Teams messages, spreadsheets and manual chasing.NEXUS fills that gap. It does not replace any existing Bluecrux product. It makes every existing product more valuable by ensuring that what they detect actually gets actioned — with governance, speed, and accountability.Every Bluecrux client engagement touches this problem. Every Axon implementation, every Binocs deployment, every SAP transformation — they all generate exceptions that need to be managed. NEXUS is not a new product category — it is the missing layer that Bluecrux&apos;s clients are already solving badly with spreadsheets.
+How NEXUS extends Bluecrux&apos;s existing product value
+Existing product
+How NEXUS multiplies its value
+Axon™
+Axon detects inventory drift and performance gaps. NEXUS turns those detections into assigned, tracked actions with deadlines and outcomes. Axon becomes more valuable because its alerts actually get resolved.
+Binocs™
+Binocs surfaces QC scheduling conflicts. NEXUS takes those conflicts, assigns them to the right person, collects approval, and pushes the re-slot back to Binocs. The AstraZeneca problem — QC with no seat at the table — is solved.
+Helion™
+Helion identifies CMO capacity risks. NEXUS routes those risks to the External Manufacturing Manager, sends a structured request to the partner, tracks the response, and escalates if it goes unanswered. The Argenx CMO coordination problem is solved.
+Anaplan / OMP / SAP
+These systems generate exceptions — forecast misses, lead time drift, order gaps. NEXUS aggregates them into one queue so the planner does not have to monitor five systems simultaneously.
+Bluecrux consulting
+Every consulting engagement produces recommendations. NEXUS gives Bluecrux a product to leave behind after the project — a live operational system that continues to deliver value and keeps the client relationship active.
+Competitive positioning
+No existing product does exactly this for supply chain. ServiceNow and Jira are generic. Axon and Kinaxis are analytics-first. What does not exist is a purpose-built exception and escalation layer designed for supply chain teams, connected to the specific tools Bluecrux&apos;s clients already use, with built-in pharma/biotech workflow logic. That is NEXUS&apos;s position.
+Revenue model
+SaaS subscription — Charged per organisation per month. Tier by number of active users and connected source systems.
+Implementation fee — Bluecrux consulting team implements and configures NEXUS as part of each client engagement. Creates a new revenue stream on every project.
+Expansion revenue — Once a client has NEXUS, they expand: more integrations, more sites, partner portal licences for CMOs. Land-and-expand model.
+Consulting stickiness — NEXUS data (resolution rates, value at risk, team response times) becomes the basis for ongoing Bluecrux advisory engagements. The tool creates a reason for the relationship to continue.
+Final statement:NEXUS is not a speculative bet on a new market. It is a product for a problem that Bluecrux&apos;s existing clients are already experiencing today — proven by their own case studies, their own client quotes, and their own published pain points.The gap it fills is real. The clients who need it are already Bluecrux customers. The integrations required are already Bluecrux&apos;s existing product ecosystem. This is the lowest-risk, highest-leverage product Bluecrux can build right now.

@@ -1,0 +1,40 @@
+.container {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.toast {
+  background: var(--navy-dark);
+  color: var(--white);
+  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: var(--radius-toast);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: toastIn 0.3s ease;
+  box-shadow: var(--shadow-modal);
+  max-width: 360px;
+}
+
+.icon {
+  flex-shrink: 0;
+  display: flex;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

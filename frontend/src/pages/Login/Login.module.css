@@ -1,0 +1,106 @@
+.page {
+  min-height: 100vh;
+  background: var(--navy-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.card {
+  width: 100%;
+  max-width: 720px;
+  background: var(--white);
+  border-radius: var(--radius-card);
+  padding: 32px;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.logoTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy-dark);
+}
+
+.logoSub {
+  font-size: 13px;
+  color: var(--cyan-primary-hover);
+  margin-top: 2px;
+}
+
+.tagline {
+  text-align: center;
+  font-size: 12px;
+  color: var(--timestamp-gray);
+  margin: 8px 0 28px 0;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--timestamp-gray);
+  margin: 20px 0 8px 0;
+}
+
+.sectionLabel:first-of-type {
+  margin-top: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.personaCard {
+  border: 0.5px solid var(--mid-gray);
+  border-radius: var(--radius-card);
+  padding: 12px 14px;
+  cursor: pointer;
+  background: var(--off-white);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.personaCard:hover {
+  background: var(--cyan-pale);
+  border-color: var(--cyan-primary);
+}
+
+.personaCard:active {
+  transform: scale(0.98);
+}
+
+.personaCard:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.personaName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.personaTitle {
+  font-size: 11px;
+  color: var(--timestamp-gray);
+  margin-top: 1px;
+}
+
+.errorBanner {
+  background: var(--critical-bg);
+  color: var(--critical);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  margin-bottom: 16px;
+}

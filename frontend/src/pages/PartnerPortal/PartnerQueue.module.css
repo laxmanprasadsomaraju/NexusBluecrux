@@ -1,0 +1,71 @@
+.layout {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.list {
+  width: 340px;
+  min-width: 340px;
+  overflow-y: auto;
+  border-right: 0.5px solid var(--mid-gray);
+}
+
+.listLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--timestamp-gray);
+  padding: 14px 14px 8px 14px;
+}
+
+.card {
+  padding: 12px 14px;
+  border-bottom: 0.5px solid var(--mid-gray);
+  cursor: pointer;
+  background: var(--white);
+}
+
+.card:hover {
+  background: var(--off-white);
+}
+
+.cardSelected {
+  background: rgba(0, 180, 216, 0.07);
+  border-left: 2px solid var(--cyan-primary);
+  padding-left: 12px;
+}
+
+.detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.detailScroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 20px;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--timestamp-gray);
+  padding-bottom: 6px;
+  border-bottom: 0.5px solid var(--mid-gray);
+}
+
+.actionBar {
+  min-height: 56px;
+  background: var(--white);
+  border-top: 0.5px solid var(--mid-gray);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+}

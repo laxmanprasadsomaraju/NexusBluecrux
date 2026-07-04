@@ -1,0 +1,162 @@
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  background: var(--navy-dark);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.logo {
+  padding: 18px 16px 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logoTitle {
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.logoSub {
+  color: var(--cyan-primary);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.nav {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 14px;
+}
+
+.sectionLabel {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: rgba(0, 180, 216, 0.5);
+  letter-spacing: 1px;
+  padding: 0 16px;
+  margin: 16px 0 6px 0;
+}
+
+.sectionLabel:first-child {
+  margin-top: 0;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 16px;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  cursor: pointer;
+  background: transparent;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.navItemActive {
+  background: rgba(0, 180, 216, 0.12);
+  color: var(--cyan-primary);
+  border-left-color: var(--cyan-primary);
+}
+
+.navLabel {
+  flex: 1;
+  text-align: left;
+}
+
+.navBadgeCritical {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background: var(--critical);
+  color: var(--white);
+}
+
+.navBadgePending {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background: var(--high);
+  color: var(--white);
+}
+
+.externalTag {
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  border: 0.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.userBlock {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userName {
+  font-size: 12px;
+  color: var(--white);
+}
+
+.userRole {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.userMenu {
+  position: relative;
+}
+
+.roleMenu {
+  position: absolute;
+  bottom: 100%;
+  left: 8px;
+  right: 8px;
+  background: var(--white);
+  border: 0.5px solid var(--mid-gray);
+  border-radius: 8px;
+  box-shadow: var(--shadow-modal);
+  overflow: hidden;
+  margin-bottom: 6px;
+  z-index: 50;
+}
+
+.roleMenuHeader {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--timestamp-gray);
+  padding: 8px 12px 4px 12px;
+}
+
+.roleMenuItem {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.roleMenuItem:hover {
+  background: var(--off-white);
+}

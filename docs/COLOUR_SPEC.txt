@@ -1,0 +1,532 @@
+
+NEXUS
+by Bluecrux
+Supply Chain Exception &amp; Escalation Hub
+Full Build Prompt + Colour Specification + Feature Map
+&quot;Turning supply chain alerts into governed, trackable, cross-team decisions&quot;
+A. Exact colour system — use these everywhere
+Every colour in NEXUS maps to a specific meaning. Never use a colour outside its role — consistency is what makes the tool feel trustworthy to enterprise users.
+A1. Core brand palette (Bluecrux-matched)
+Token name
+Hex value
+Use it for…
+--navy-dark
+#0D1B2A
+Sidebar background, page headers, primary headings
+--navy-mid
+#1A2744
+Sidebar hover states, secondary dark surfaces
+--cyan-primary
+#00B4D8
+Primary CTA buttons, active nav indicator, accent borders, AI suggestion highlights, all interactive elements
+--cyan-light
+#90E0EF
+Tag fills, soft icon backgrounds, hover states on cyan elements
+--cyan-pale
+#CAF0F8
+Light card backgrounds, AI suggestion box fill, info callout backgrounds
+--white
+#FFFFFF
+Card backgrounds, modal backgrounds, main content area
+--off-white
+#F8F9FA
+Page canvas background, table alternating rows (light)
+--light-gray
+#F1F3F5
+Stat card backgrounds, table alternating rows, input field backgrounds
+--mid-gray
+#CED4DA
+Borders, dividers, hairlines between sections
+--dark-gray
+#495057
+All body text, descriptions, helper text
+--black
+#212529
+Headings, labels, strong emphasis text
+A2. Severity colours — the most important rules in the whole system
+These four colours are used ONLY for exception severity. Never use red for anything that is not Critical. Never use amber for anything that is not High. Consistency is critical because planners scan these colours at a glance every morning.
+Severity
+Dot / text colour
+Badge background
+Where to apply it
+Critical
+#E63946
+#FDECEC
+Red dot in exception list. Red badge text &apos;Critical&apos;. Red stat card value. Red overdue badge in My Actions. Border of escalated exceptions.
+High
+#F4A261
+#FEF3E2
+Amber dot in exception list. Amber badge text &apos;High&apos;. Amber stat card value. Amber &apos;Due today&apos; badge in My Actions.
+Medium
+#3A86FF
+#EBF3FF
+Blue dot in exception list. Blue badge text &apos;Medium&apos;. Blue &apos;Tomorrow&apos; badge in My Actions.
+Resolved
+#2DC653
+#E9F7EF
+Green badge text &apos;Resolved&apos;. Green delta arrows in stat cards. Green &apos;On track&apos; partner status badge. Green tick on completed actions.
+A3. AI suggestion colour — purple only
+The AI suggestion box always uses purple. This is intentional — it visually separates machine suggestions from human actions. Users must never confuse an AI suggestion with an approved decision.
+Token
+Hex
+Role
+--purple
+#7B2FBE
+AI suggestion box left border (4px solid), icon colour, label text &apos;AI suggestion&apos;
+--purple-light
+#F3E8FF
+AI suggestion box background fill
+A4. Typography rules
+Element
+Spec
+Where applied
+Font family
+Inter (primary), system-ui fallback
+All UI text. Never use a serif font anywhere in the tool.
+Page/section heading H1
+24px / 600 weight / #0D1B2A
+Screen titles only (e.g. &apos;Exception queue&apos;, &apos;Executive view&apos;)
+Sub-heading H2
+16px / 600 weight / #0D1B2A
+Section headers inside panels (e.g. &apos;Impact analysis&apos;, &apos;Activity timeline&apos;)
+Label / category
+11px / 600 weight / #495057 / uppercase + 0.5px letter-spacing
+All small labels — stat card labels, column headers, filter section titles
+Body text
+13px / 400 weight / #495057
+All descriptions, timeline entries, detail text
+Strong body
+13px / 600 weight / #212529
+Owner names, exception titles, metric values in detail panels
+Metric number
+22–28px / 500 weight
+The large number in stat cards — colour varies by severity
+Badge text
+11px / 500 weight
+Always matches the severity colour of its background — never black on a coloured badge
+Timestamp
+11px / 400 weight / #6C757D
+All timestamps in timeline, exception age, due times
+Button text
+12px / 500 weight
+All buttons — sentence case, never ALL CAPS
+B. Full build prompt — paste this to build the tool
+This is the complete prompt to use when building NEXUS. It is written to be given to a developer, a no-code tool, or an AI code generator. Every screen, every component, every interaction is specified.
+NEXUS — Full Build Prompt
+Build a web application called NEXUS — a Supply Chain Exception and Escalation Hub for Bluecrux.
+TECH STACK: React + TypeScript frontend. Python + FastAPI backend. PostgreSQL database. Azure deployment. Microsoft Entra ID for SSO. No mock data — build with a proper data layer from the start.
+DESIGN SYSTEM: Follow the exact colour tokens and typography rules in Section A of this document. The app must feel like a premium enterprise SaaS tool — clean, flat, no gradients, no drop shadows except on modals. Every colour must have a purpose. Never use red for anything except Critical exceptions.
+LAYOUT: Fixed left sidebar (220px wide, background #0D1B2A) + main content area (remaining width, background #F8F9FA). Top bar inside each screen (white, 56px tall, 0.5px bottom border #CED4DA).
+B1. Sidebar specification
+Component
+Style spec
+Interaction
+Logo area
+Top of sidebar. &apos;NEXUS&apos; in white 16px/600, &apos;by Bluecrux&apos; in #00B4D8 12px below. 1px bottom border rgba(255,255,255,0.1).
+—
+Nav section labels
+All-caps, 10px, #00B4D8 at 50% opacity, letter-spacing 1px. Examples: &apos;OPERATIONS&apos;, &apos;NETWORK&apos;, &apos;SETTINGS&apos;.
+Static, not clickable
+Nav items
+Display:flex, align-items:center, gap:10px. Icon 16px (Lucide outline). Label 13px #FFFFFF at 70% opacity. 40px tall. Padding 0 16px. Border-left 2px transparent.
+Hover: background rgba(255,255,255,0.06), label at 100% opacity. Active: background rgba(0,180,216,0.12), label #00B4D8 100%, border-left 2px #00B4D8.
+Badge on nav item
+Right-aligned. 10px/500. Padding 2px 6px. Border-radius 10px. Critical count: background #E63946, text white. Pending count: background #F4A261, text white.
+Show only when count &gt; 0
+User block
+Bottom of sidebar. 32px avatar circle (background #00B4D8, initials in #0D1B2A 12px/500). Name 12px white. Role 11px rgba(255,255,255,0.4). 1px top border rgba(255,255,255,0.1).
+Not clickable in MVP
+Nav items list
+1. Exception queue (ti-alert-triangle icon), 2. My actions (ti-checklist), 3. Executive view (ti-chart-bar), 4. Partner network (ti-building-factory), 5. Alert rules (ti-settings), 6. Teams (ti-users)
+Items 5–6 are settings, shown after a divider
+B2. Top bar specification (present on every screen)
+Component
+Style spec
+Interaction
+Screen title
+Left-aligned. 15px/500/#212529. Sub-title on second line: 12px/#6C757D (e.g. &apos;Last synced 2 min ago from Axon · SAP · Anaplan&apos;).
+Static
+Sync button
+Right side. 12px/500. Transparent background, 0.5px border #CED4DA, border-radius 8px, padding 7px 14px. Icon ti-refresh 14px.
+On click: icon spins for 1.5s, sub-title updates to &apos;Syncing…&apos; then &apos;Last synced just now&apos;.
+Raise exception button
+Right of Sync. Same style but background #00B4D8, text #0D1B2A, border #00B4D8. Icon ti-plus.
+On click: opens Raise Exception modal (see B7).
+B3. Exception queue screen — full specification
+This is the default landing screen. It has four zones: stat strip, filter bar, exception list, and detail panel.
+Zone 1 — Stat strip (4 cards, full width, 80px tall)
+Card
+Style spec
+Click behaviour
+Critical open
+Large number: 22px/500, colour #E63946. Label: 11px/600 uppercase #6C757D. Delta line: 11px, up arrow = #E63946, down arrow = #2DC653.
+Clicking this card filters the exception list to Critical only.
+Awaiting action
+Large number: 22px/500, colour #F4A261. Same label and delta pattern.
+Clicking filters to status = Awaiting action.
+Resolved this week
+Large number: 22px/500, colour #2DC653. Delta shows average resolution time.
+Clicking filters to Resolved this week.
+Avg time to act
+Large number: 22px/500, colour #00B4D8. Shows hours. Delta compares to last week.
+No filter action — informational only.
+Zone 2 — Filter bar (below stat strip, 44px tall)
+Four filter pills: All (n) / Critical / Mine / Partner
+Pill style: 11px/500, padding 4px 12px, border-radius 20px, border 0.5px #CED4DA
+Inactive: background transparent, text #6C757D
+Active: background #0D1B2A, text #FFFFFF, border #0D1B2A
+Count in brackets updates live when filters are applied
+Zone 3 — Exception list (left column, 340px wide, scrollable)
+Each exception is an exception card. Cards are stacked vertically with a 0.5px border #CED4DA between them.
+Element
+Spec
+Interaction
+Severity dot
+8px circle. Colour: Critical=#E63946, High=#F4A261, Medium=#3A86FF. Position: top-left of card, margin-top 5px.
+—
+Exception title
+13px/500/#212529. Max 2 lines, then ellipsis. Flex:1 next to severity dot.
+—
+Tags row
+Below title. Small tags: 11px/#495057, background #F1F3F5, border 0.5px #CED4DA, border-radius 4px, padding 2px 6px. Show: type tag (e.g. &apos;QC hold&apos;), company tag (e.g. &apos;AstraZeneca&apos;), source tag (e.g. &apos;Axon&apos;).
+—
+Footer row
+Below tags. Left: exception age in 11px/#6C757D (e.g. &apos;Opened 3h ago&apos;). Right: owner mini-avatar (18px circle, #00B4D8 background, initials in #0D1B2A 9px/500) + owner name 11px/#495057.
+—
+Card states
+Default: background #FFFFFF, padding 12px 14px. Hover: background #F8F9FA. Selected: background rgba(0,180,216,0.07), border-left 2px #00B4D8, padding-left reduced by 2px to compensate.
+Clicking any card loads its detail in Zone 4.
+Zone 4 — Detail panel (right column, flex:1, scrollable)
+The detail panel has five sub-sections stacked vertically: header, impact analysis, AI suggestion, activity timeline, action bar.
+Sub-section
+Style spec
+Notes
+Detail header
+Exception title: 15px/500/#212529. Below: row of badges. Badge style: 11px/500, border-radius 4px, padding 3px 8px. Severity badge uses severity colours. Status badge (e.g. &apos;Awaiting action&apos;) uses amber. Type/company badge uses blue. Border-bottom 0.5px #CED4DA.
+—
+Impact analysis section
+Section label: 11px/600 uppercase #CED4DA letter-spacing 0.5px. Below label: 0.5px border #CED4DA. Info rows: label 13px/#6C757D width 130px, value 13px/500/#212529. Values at risk shown in #E63946.
+—
+AI suggestion box
+Background #F3E8FF. Left border 4px solid #7B2FBE. Border-radius 8px. Padding 12px 14px. Header: &apos;AI suggestion&apos; in 12px/500/#7B2FBE with bolt icon. Body: 12px/#495057 line-height 1.6. Confidence score shown as: &apos;Confidence: 87%&apos; in #7B2FBE.
+—
+Activity timeline
+Each item: flex row. Left: 14px circle dot (open=#FDECEC border #E63946, action=#EBF3FF border #3A86FF, note=#F1F3F5 border #CED4DA). Right: who (12px/500/#212529) + when (11px/#6C757D). Below: 12px/#495057 body text. Connecting line: 0.5px #CED4DA from dot downward (not on last item).
+—
+Action bar
+Fixed at bottom of detail panel. 56px tall. Background #FFFFFF. 0.5px top border #CED4DA. Flex row, gap 8px, padding 0 20px. Primary action button: background #00B4D8, text #0D1B2A, 12px/500, border-radius 8px, padding 7px 14px. Secondary buttons: transparent, border 0.5px #CED4DA. Source system link button: right-aligned with margin-left:auto, icon ti-external-link.
+Primary button: hover background #0099BB. All buttons: active scale(0.98). Source link: opens in new tab.
+B4. My actions screen
+Element
+Spec
+Notes
+Screen purpose
+Personal to-do list. Shows only exceptions assigned to the logged-in user that require an action. Sorted by urgency.
+—
+Action card style
+Background #F8F9FA. Border-radius 10px. Border 0.5px #CED4DA. Padding 12px 14px. Full width.
+—
+Status badge
+Overdue: background #FDECEC, text #E63946. Due today: background #FEF3E2, text #F4A261. Tomorrow: background #EBF3FF, text #3A86FF. This week: background #F1F3F5, text #495057. All 11px/500, border-radius 4px, padding 3px 8px.
+—
+Action title
+13px/500/#212529. Flex:1 between badge and button.
+—
+Context line
+12px/#6C757D. Shows: &apos;Due: [time] · [exception source] · [severity]&apos;.
+—
+Action button
+Right-aligned. Same button style as action bar but smaller: 11px, padding 5px 10px. Primary (#00B4D8) for Overdue and Due today. Outline for others.
+On click: opens exception detail in a side panel overlay.
+Sort order
+1. Overdue (by how late). 2. Due today (by deadline time). 3. Tomorrow. 4. This week. 5. No deadline.
+—
+B5. Executive view screen
+Element
+Spec
+Notes
+Layout
+2-column CSS grid, gap 12px, padding 16px 20px. All content in cards: background #F1F3F5, border-radius 12px, padding 14px, border 0.5px #CED4DA.
+—
+Resolution trend chart
+Spans full width (grid-column: 1 / -1). Grouped bar chart, last 4 weeks. Bars: Critical open = #E63946, High open = #F4A261, Resolved = #2DC653. Height 80px. X-axis labels: &apos;W1&apos; through &apos;W4&apos; in 9px/#6C757D.
+—
+Exceptions by source
+Horizontal bar chart. Each bar: full-width track #CED4DA 6px, fill colour per system (Axon=#00B4D8, Helion=#7B2FBE, Anaplan=#F4A261, Manual=#CED4DA). Label 12px/#495057, value right-aligned 11px/#6C757D.
+—
+Team response times
+Same horizontal bar format. Colour: under 4h = #2DC653, 4–8h = #F4A261, over 8h = #E63946. Shows which team is slowest at a glance.
+—
+Value at risk card
+Large number: 26px/500/#E63946. Delta vs last week in 12px. Largest contributor in 12px/#495057 below.
+—
+On-time completion rate
+Large number: 26px/500 — green if above target, amber if within 10%, red if below. Target shown as a label. Trend vs last month.
+—
+Export PDF button
+Top-right of screen in top bar. Same outline button style. Icon ti-download.
+On click: generates PDF of executive view. Show loading spinner on button while generating.
+B6. Partner network screen
+Element
+Spec
+Notes
+Table layout
+Full-width table. Header row: background #0D1B2A, text #FFFFFF 11px/600 uppercase. Alternating rows: even=#F8F9FA, odd=#FFFFFF. All cells: 18px, padding 10px 14px, vertical-align:middle.
+—
+Columns
+Partner name (bold, 12px/500/#212529) | Type badge (CMO/Supplier/3PL in #F1F3F5 border #CED4DA) | Open exceptions (coloured by severity) | Avg response time (coloured: under 4h green, 4–8h amber, over 8h red) | Status badge (On track=green, Monitoring=amber, Needs action=red).
+—
+Row click
+Clicking a row filters the Exception queue to that partner only. A back button appears in the queue filter bar: &apos;← All partners&apos;.
+—
+Partner scorecard
+Clicking the partner name (not the row) opens a side panel showing 90-day trend of their response time and exception count.
+Phase 2 feature — placeholder in MVP
+B7. Raise exception modal
+Element
+Spec
+Notes
+Modal overlay
+Full-screen overlay: rgba(0,0,0,0.45). Modal box: 400px wide, background #FFFFFF, border-radius 12px, border 0.5px #CED4DA.
+Click outside overlay to dismiss.
+Modal header
+&apos;Raise exception&apos; 14px/500/#212529. Close icon ti-x right-aligned, 16px/#6C757D. 0.5px bottom border #CED4DA. Padding 16px 20px.
+—
+Form fields
+Exception title: full-width text input. Severity: dropdown (Critical/High/Medium). Source system: dropdown (Axon/Helion/Anaplan/SAP/Binocs/Manual). Owner: text input with autocomplete search. Due date: date-time picker. Notes: textarea 80px tall.
+All inputs: border 0.5px #CED4DA, border-radius 8px, padding 8px 10px, 13px font, background #FFFFFF. Focus: border #00B4D8, no box shadow.
+Modal footer
+Cancel button (outline) + Submit button (#00B4D8 background #0D1B2A text). Gap 8px, right-aligned. 0.5px top border #CED4DA.
+Submit: validates all fields first. Shows inline error in #E63946 12px below empty required fields. On success: modal closes, toast appears, exception added to queue top.
+B8. Toast notifications
+Element
+Spec
+Notes
+Style
+Fixed bottom-right, z-index 200. Background #0D1B2A. Text #FFFFFF 13px. Padding 10px 16px. Border-radius 8px. Left icon: ti-check in #2DC653 for success, ti-alert-circle in #E63946 for error.
+—
+Animation
+Opacity 0 → 1 on appear (0.3s ease). Opacity 1 → 0 on dismiss (0.3s ease). Auto-dismiss after 3 seconds.
+—
+Trigger events
+Action approved: &apos;Action approved — [system] updated&apos;. Exception submitted: &apos;Exception submitted and owner notified&apos;. Sync complete: &apos;Data synced from all sources&apos;. Escalation sent: &apos;Escalated to [name] with deadline [time]&apos;.
+—
+C. Complete interaction map — every click, every result
+This section maps every single interactive element in the tool to its exact behaviour. Use this as the acceptance criteria when testing the build.
+C1. Sidebar interactions
+User action
+What happens
+Click &apos;Exception queue&apos;
+Sets active screen to Exception queue. Loads exception list from API. Updates active nav style.
+Click &apos;My actions&apos;
+Sets active screen to My actions. Loads only exceptions assigned to current user with pending actions.
+Click &apos;Executive view&apos;
+Sets active screen to Executive view. Loads aggregated metrics from API.
+Click &apos;Partner network&apos;
+Sets active screen to Partner network. Loads all partners from API.
+Click &apos;Alert rules&apos;
+Sets active screen to Alert rules settings (build in Phase 2 — show &apos;Coming soon&apos; placeholder in MVP).
+Click &apos;Teams&apos;
+Sets active screen to Teams management (Phase 2 placeholder).
+C2. Exception queue interactions
+User action
+What happens
+Click stat card &apos;Critical open&apos;
+Applies filter: severity=Critical. Filter pill &apos;Critical&apos; becomes active. List updates.
+Click stat card &apos;Awaiting action&apos;
+Applies filter: status=Awaiting action. No pill changes — filter is shown as a tag above the list: &apos;Filter: Awaiting action ✕&apos;.
+Click filter pill &apos;All&apos;
+Clears all filters. Shows full exception list. Pill &apos;All&apos; becomes active.
+Click filter pill &apos;Critical&apos;
+Filters list to severity=Critical only. Pill &apos;Critical&apos; becomes active.
+Click filter pill &apos;Mine&apos;
+Filters list to exceptions where owner = current user. Pill &apos;Mine&apos; becomes active.
+Click filter pill &apos;Partner&apos;
+Filters list to exceptions involving a CMO, supplier, or 3PL. Pill &apos;Partner&apos; becomes active.
+Click exception card
+Card becomes selected (border-left 2px #00B4D8, background changes). Detail panel loads that exception&apos;s data. Previous selected card deselects.
+Click &apos;Raise exception&apos; button
+Opens Raise exception modal (see B7).
+Click &apos;Sync&apos; button
+Icon spins. Sub-title shows &apos;Syncing…&apos;. API call to refresh data from all source systems. On complete: icon stops, sub-title shows &apos;Last synced just now&apos;.
+C3. Detail panel interactions
+User action
+What happens
+Click &apos;Approve [action]&apos; (primary button)
+Shows confirmation tooltip: &apos;Confirm approval?&apos; with Yes/Cancel. On Yes: action logged in timeline with user name + timestamp. Exception status updates. API call pushes decision to source system. Button becomes disabled and shows &apos;Approved ✓&apos; text. Toast appears.
+Click &apos;Escalate&apos;
+Opens escalation form as a modal: &apos;Escalate to&apos; name search, deadline date-time, note text area. Submit sends notification to escalation target. Logs in timeline. Exception gets &apos;Escalated&apos; status badge.
+Click &apos;Add note&apos;
+Opens a small text area below the timeline (inline, not a modal). Submit adds note to timeline immediately. Note shows author name and timestamp.
+Click &apos;Open in Axon&apos; / &apos;Open in Binocs&apos; etc.
+Opens source system URL in a new browser tab. Deep link to the specific record.
+Hover AI suggestion box
+Tooltip appears: &apos;This suggestion is generated by AI. Always verify before approving.&apos; This reinforces that it is a suggestion, not an automatic action.
+C4. My actions interactions
+User action
+What happens
+Click &apos;Approve&apos; on action card
+Same confirmation + timeline logging flow as detail panel approve. Card moves to a &apos;Completed today&apos; section at the bottom.
+Click &apos;Review&apos; on action card
+Opens the full exception detail as a side panel overlay (slides in from right, 480px wide). Same detail panel content.
+Click &apos;Start&apos; on action card
+Same as Review — opens the detail panel. Marks action status as &apos;In progress&apos;.
+C5. Raise exception modal interactions
+User action
+What happens
+Type in &apos;Owner&apos; field
+Autocomplete dropdown appears after 2 characters. Shows matching users with their role subtitle. Arrow keys to navigate, Enter to select.
+Select severity &apos;Critical&apos;
+Severity dropdown shows red dot next to &apos;Critical&apos;. Selected value shown with severity dot in the field.
+Click &apos;Submit exception&apos;
+Validates all required fields (title, severity, owner). If missing: shows inline error in red below that field, shakes the submit button once. If valid: creates exception, closes modal, shows success toast, exception appears at top of queue with &apos;New&apos; indicator for 5 seconds.
+Click &apos;Cancel&apos; or overlay
+Closes modal. If any field has been filled, shows &apos;Discard changes?&apos; confirmation with Keep/Discard buttons.
+D. Feature checklist — MVP vs Phase 2
+Use this list to track what is in scope for the first build and what comes later. MVP must be completable in 8 months with a team of 4–5 people.
+D1. MVP — build these first (months 1–8)
+Feature
+Description
+Priority
+Exception queue screen
+Full implementation including 4 filter pills, 4 stat cards, exception list, full detail panel with timeline, action buttons
+P0 — core of the product
+My actions screen
+Personal to-do list with status badges, sort order, one-click approve and review
+P0 — daily driver for planners
+Raise exception modal
+Full form with validation, owner autocomplete, severity selector
+P0 — needed for manual exceptions
+Executive view — basic
+4 stat cards + team response time bar + value at risk card + on-time rate card
+P0 — needed for leadership buy-in
+Partner network table
+Simple table view of partners with exception count, response time, status badge
+P1 — important for CMO use cases
+Toast notifications
+All trigger events with success/error variants
+P0 — core UX feedback
+SSO via Microsoft Entra ID
+Login, role-based access (planner / manager / director)
+P0 — required for enterprise clients
+Axon integration (read)
+Pull exceptions and KPI alerts from Axon API
+P0 — primary data source
+SAP integration (read + write)
+Pull inventory and lead-time exceptions, push expedite approvals
+P0 — needed for inventory flow
+Binocs integration (read + write)
+Pull QC scheduling exceptions, push re-slot approvals
+P0 — needed for QC flow
+Teams notifications
+Send alert to Teams when exception created, escalated, or overdue
+P1 — high user adoption driver
+Audit log
+Immutable, append-only timeline — every action logged with user + timestamp
+P0 — required for regulated clients
+D2. Phase 2 — after MVP is validated in pilot
+Feature
+Description
+Priority
+Partner portal
+CMO/supplier-facing login to view their exceptions and submit responses
+High — needed for full CMO flow
+Helion integration
+Pull CMO capacity exceptions from Helion
+High — critical for biotech clients
+Anaplan integration
+Pull forecast accuracy and planning exceptions from Anaplan
+Medium — broadens coverage
+PDF export
+One-click PDF of executive view for board reporting
+Medium
+OMP / Kinaxis integration
+For clients using these APS platforms
+Medium
+Partner scorecard
+90-day trend view per partner on clicks in Partner network
+Medium
+Alert rules settings
+UI for configuring which events auto-create exceptions, thresholds, routing rules
+High — needed for client self-service
+Mobile responsive
+Optimise layout for tablet and mobile screens
+Low in MVP — web first
+Full trend charts
+Extended historical charts in executive view
+Low
+Email notifications
+For users or partners not on Teams
+Medium
+E. Quick reference — colour + component cheatsheet
+Print or pin this page. These are the answers to the most common design questions during build.
+&apos;What colour do I use for…&apos;
+&apos;What colour for…&apos;
+Answer
+A critical exception
+Dot: #E63946. Badge bg: #FDECEC. Badge text: #E63946.
+A high exception
+Dot: #F4A261. Badge bg: #FEF3E2. Badge text: #F4A261.
+A medium exception
+Dot: #3A86FF. Badge bg: #EBF3FF. Badge text: #3A86FF.
+A resolved exception
+Badge bg: #E9F7EF. Badge text: #2DC653. Tick: #2DC653.
+An AI suggestion
+Left border: #7B2FBE. Background: #F3E8FF. Text accent: #7B2FBE.
+A primary button
+Background: #00B4D8. Text: #0D1B2A. Hover: #0099BB.
+A secondary/outline button
+Background: transparent. Border: 0.5px #CED4DA. Text: #212529. Hover bg: #F8F9FA.
+The sidebar
+Background: #0D1B2A. Active item left accent: #00B4D8.
+Body text
+#495057 at 13px/400.
+All headings
+#212529 or #0D1B2A at 15–24px/500–600.
+A positive delta (things improving)
+#2DC653 with ↓ arrow.
+A negative delta (things worsening)
+#E63946 with ↑ arrow.
+A page/card background
+Page canvas: #F8F9FA. Card: #FFFFFF. Stat card: #F1F3F5.
+Table header row
+Background: #0D1B2A. Text: #FFFFFF 11px/600 uppercase.
+Alternating table rows
+Even: #F8F9FA. Odd: #FFFFFF.
+&apos;What border-radius do I use for…&apos;
+Element
+Border-radius
+Buttons
+8px
+Cards / panels
+12px
+Badges / pills / tags
+4px
+Filter pills (rounded)
+20px
+Avatars
+50% (always a circle)
+Severity dots
+50% (always a circle)
+Input fields
+8px
+Modal
+12px
+Toast
+8px
+Timeline dots
+50%
+Key rules — never break these
+Never use red for anything except Critical severity exceptions. Red is reserved.
+Never add drop shadows to cards or panels. Flat surfaces only. (Exception: modals get box-shadow: 0 20px 60px rgba(0,0,0,0.2))
+Never use gradients anywhere in the UI.
+Never use ALL CAPS on button labels. Sentence case only.
+Never make badge text black on a coloured badge. Always use the same colour family as the badge background.
+Never skip the confirmation step before a primary action (approve, escalate). Always ask &apos;Confirm?&apos; first.
+Never let an AI suggestion appear as a confirmed action. The purple box is always clearly labelled &apos;AI suggestion&apos;.
+Never show more than 4 action buttons in the action bar. If you need more, put them in a &apos;More actions&apos; dropdown.
+The audit timeline is append-only. Nothing can be deleted from it. Ever.
+Remember why these rules exist:
+NEXUS is used by supply chain planners and directors at pharma companies like AstraZeneca, biotech companies like Argenx, and CPG companies like Maesa. These are regulated, high-stakes environments.
+A visual mistake (showing green when something is critical, making an AI suggestion look like an approved action) can cause real operational harm.
+Consistency is not an aesthetic preference — it is a safety feature.

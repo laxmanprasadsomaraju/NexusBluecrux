@@ -1,0 +1,49 @@
+/* NEXUS design tokens — generated 1:1 from docs/COLOUR_SPEC.txt sections A and E.
+   Never hardcode a hex value anywhere else — reference these variables (or the
+   matching JS constants in src/lib/tokens.ts) instead. */
+:root {
+  /* A1 — core brand palette */
+  --navy-dark: #0D1B2A;
+  --navy-mid: #1A2744;
+  --cyan-primary: #00B4D8;
+  --cyan-primary-hover: #0099BB;
+  --cyan-light: #90E0EF;
+  --cyan-pale: #CAF0F8;
+  --white: #FFFFFF;
+  --off-white: #F8F9FA;
+  --light-gray: #F1F3F5;
+  --mid-gray: #CED4DA;
+  --dark-gray: #495057;
+  --black: #212529;
+  --timestamp-gray: #6C757D;
+
+  /* A2 — severity colours (reserved meanings, never reuse) */
+  --critical: #E63946;
+  --critical-bg: #FDECEC;
+  --high: #F4A261;
+  --high-bg: #FEF3E2;
+  --medium: #3A86FF;
+  --medium-bg: #EBF3FF;
+  --resolved: #2DC653;
+  --resolved-bg: #E9F7EF;
+
+  /* A3 — AI suggestion colour (purple only) */
+  --purple: #7B2FBE;
+  --purple-light: #F3E8FF;
+
+  /* Radii per section E */
+  --radius-button: 8px;
+  --radius-card: 12px;
+  --radius-badge: 4px;
+  --radius-pill: 20px;
+  --radius-input: 8px;
+  --radius-modal: 12px;
+  --radius-toast: 8px;
+
+  /* Shadows — modals/toasts/overlay popovers ONLY, never cards */
+  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.2);
+  --overlay-bg: rgba(0, 0, 0, 0.45);
+
+  /* Fonts */
+  --font-family: Inter, system-ui, sans-serif;
+}

@@ -1,0 +1,70 @@
+.btn {
+  font-family: var(--font-family);
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: var(--radius-button);
+  padding: 7px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0.5px solid transparent;
+  transition: background-color 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.small {
+  font-size: 11px;
+  padding: 5px 10px;
+}
+
+.primary {
+  background: var(--cyan-primary);
+  color: var(--navy-dark);
+  border-color: var(--cyan-primary);
+}
+.primary:hover:not(:disabled) {
+  background: var(--cyan-primary-hover);
+}
+
+.outline {
+  background: transparent;
+  color: var(--black);
+  border-color: var(--mid-gray);
+}
+.outline:hover:not(:disabled) {
+  background: var(--off-white);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--black);
+  border-color: transparent;
+}
+.ghost:hover:not(:disabled) {
+  background: var(--off-white);
+}
+
+.danger {
+  background: var(--critical-bg);
+  color: var(--critical);
+  border-color: transparent;
+}
+.danger:hover:not(:disabled) {
+  background: #fbdada;
+}
+
+.success {
+  background: var(--resolved-bg);
+  color: var(--resolved);
+  border-color: transparent;
+}

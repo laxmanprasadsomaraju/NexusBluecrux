@@ -1,0 +1,101 @@
+.page {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 16px 20px;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.kpiStrip {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.kpiCard {
+  background: var(--light-gray);
+  border-radius: var(--radius-card);
+  padding: 14px;
+  border: 0.5px solid var(--mid-gray);
+}
+
+.kpiLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--timestamp-gray);
+}
+
+.kpiValue {
+  font-size: 26px;
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+.kpiDelta {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.chartCard {
+  background: var(--light-gray);
+  border-radius: var(--radius-card);
+  padding: 14px;
+  border: 0.5px solid var(--mid-gray);
+}
+
+.chartTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.chartSub {
+  font-size: 11px;
+  color: var(--timestamp-gray);
+  margin-top: 2px;
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--dark-gray);
+}
+
+.legendSwatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.partnerRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 4px;
+  border-bottom: 0.5px solid var(--mid-gray);
+  cursor: pointer;
+}
+
+.partnerRow:hover {
+  background: var(--cyan-pale);
+}

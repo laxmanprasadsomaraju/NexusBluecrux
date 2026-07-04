@@ -1,0 +1,29 @@
+# Backend (Python)
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.db
+backend/nexus.db
+backend/generated_reports/*.pdf
+*.pyc
+
+# Frontend (Node)
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+frontend/.vite/
+
+# Env files
+.env
+.env.local
+!frontend/.env
+
+# OS / editor
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# Playwright / test artifacts
+.playwright-mcp/
